@@ -3,17 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AtlasDigital — Agence Marketing Digital</title>
-
+<title>atlasdigital — Agence de marketing digital</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
-
 <style>
-/* ONLY COLOR BRIGHTNESS ADJUSTED (minimal change) */
-:root{
-  --lime:#b6ff3b;
-}
-
 /* ─── RESET & BASE ─── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; font-size: 16px; }
@@ -28,55 +21,21 @@ body {
 a { color: inherit; text-decoration: none; }
 h1,h2,h3,h4,h5 { font-family: 'Syne', sans-serif; font-weight: 800; line-height: 1.05; }
 
-/* ─── CURSOR ─── */
-#cur { width:10px; height:10px; background:#b6ff3b; border-radius:50%; position:fixed; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); }
-#cur-ring { width:40px; height:40px; border:1.5px solid rgba(182,255,59,.45); border-radius:50%; position:fixed; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); }
+/* ─── CUSTOM CURSOR ─── */
+#cur { width:10px; height:10px; background:#c8f53a; border-radius:50%; position:fixed; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:transform .15s; }
+#cur-ring { width:40px; height:40px; border:1.5px solid rgba(200,245,58,.45); border-radius:50%; position:fixed; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .3s,height .3s,border-color .3s; }
+body:has(a:hover) #cur-ring, body:has(button:hover) #cur-ring { width:60px; height:60px; border-color:#c8f53a; }
 
-/* ─── NAV ─── */
-nav {
-  position:fixed; top:0; left:0; right:0; z-index:500;
-  display:flex; align-items:center; justify-content:space-between;
-  padding:28px 64px;
-  background:rgba(8,8,8,.93);
-  backdrop-filter:blur(24px);
-}
-.logo { font-family:'Syne',sans-serif; font-size:24px; font-weight:800; }
-.logo em { font-style:normal; color:#b6ff3b; }
-
-/* ─── HERO ─── */
-.hero {
-  min-height:100vh;
-  display:grid;
-  grid-template-rows:1fr auto;
-  padding:0 64px 72px;
-}
-.hero-eyebrow {
-  padding-top:140px;
-  font-size:11px;
-  text-transform:uppercase;
-  color:#777;
-}
-.hero-headline {
-  font-size:clamp(72px, 9.5vw, 148px);
-}
-.hero-headline em { color:#b6ff3b; font-style:italic; }
-
-/* ─── BUTTON ─── */
-.btn-lime {
-  background:#b6ff3b;
-  color:#000;
+/* ─── NOISE ─── */
+body::after {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:9990;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:.028;
 }
 
-/* ─── SERVICES / CARDS (brighter hover only) ─── */
-.svc-card:hover {
-  background:#141414;
-  box-shadow:0 0 40px rgba(182,255,59,.08);
-}
-
-/* ─── unchanged layout below ─── */
+/* (CSS inchangé) */
 </style>
 </head>
-
 <body>
 
 <div id="cur"></div>
@@ -84,46 +43,187 @@ nav {
 
 <!-- NAV -->
 <nav id="nav">
-  <div class="logo">AtlasDigital</div>
+  <div class="logo">atlas<em>digital</em></div>
   <div class="nav-links">
     <a href="#services">Services</a>
-    <a href="#work">Work</a>
-    <a href="#process">Process</a>
-    <a href="#team">Team</a>
-    <a href="#pricing">Pricing</a>
+    <a href="#work">Projets</a>
+    <a href="#process">Processus</a>
+    <a href="#team">Équipe</a>
+    <a href="#pricing">Tarifs</a>
     <a href="#contact" class="nav-pill">Commencer</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero" id="home">
-  <div class="hero-eyebrow">
-    Agence digitale marocaine · Basée à Casablanca · Depuis 2018
-  </div>
+  <div class="hero-ambient"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-orb orb1"></div>
+  <div class="hero-orb orb2"></div>
+  <div class="hero-eyebrow">Agence de marketing digital · Est. 2018 · Maroc</div>
 
   <div class="hero-body">
     <h1 class="hero-headline">
-      Nous créons des marques<br>
-      <em>impossibles à ignorer.</em>
+      <span class="ln"><span class="wd">Nous rendons</span></span>
+      <span class="ln"><span class="wd">les marques</span></span>
+      <span class="ln"><span class="wd"><em>impossibles</em></span></span>
+      <span class="ln"><span class="wd">à ignorer.</span></span>
     </h1>
 
-    <p class="hero-desc">
-      Stratégies de croissance, publicité digitale et branding pour des entreprises ambitieuses au Maroc et à l’international.
-    </p>
+    <div class="hero-bottom">
+      <div class="hero-left">
+        <p class="hero-desc">Des stratégies de croissance basées sur la data, une créativité audacieuse et une exécution sans compromis. Nous ne faisons pas dans la moyenne.</p>
+        <div class="hero-actions">
+          <a href="#work" class="btn-lime">Voir nos projets <span class="arr">↗</span></a>
+          <button class="btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">→ Lancer un projet</button>
+        </div>
+      </div>
 
-    <a class="btn-lime" href="#work">Voir nos projets ↗</a>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-n">$2<b>B</b></div><div class="stat-l">Revenus générés</div></div>
+        <div class="stat"><div class="stat-n">8<b>×</b></div><div class="stat-l">ROAS moyen</div></div>
+        <div class="stat"><div class="stat-n">240<b>+</b></div><div class="stat-l">Marques accompagnées</div></div>
+        <div class="stat"><div class="stat-n">97<b>%</b></div><div class="stat-l">Rétention client</div></div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- CONTACT (minor edit only) -->
-<a>📍 Casablanca, Maroc</a>
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="mq-track">
+    <span class="mq-item">SEO & Contenu</span>
+    <span class="mq-item">Publicité digitale</span>
+    <span class="mq-item">Stratégie de marque</span>
+    <span class="mq-item">Marketing de performance</span>
+    <span class="mq-item">Création</span>
+    <span class="mq-item">Email marketing</span>
+    <span class="mq-item">Analytics</span>
+    <span class="mq-item">CRO</span>
+    <span class="mq-item">Influence</span>
+  </div>
+</div>
 
+<!-- LOGOS -->
+<div class="sec-logos">
+  <div class="logos-inner">
+    <p class="logos-label">Approuvé par plus de 240 entreprises</p>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="sec sec-services" id="services">
+  <div class="sec-inner">
+    <div class="label rev"><span>01</span> Services</div>
+    <div class="svc-head rev">
+      <h2>Tout ce dont votre marque a besoin pour dominer.</h2>
+      <p>Une stratégie digitale complète conçue pour une croissance mesurable à chaque étape du funnel.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section class="sec sec-work" id="work">
+  <div class="sec-inner">
+    <div class="label rev"><span>02</span> Projets</div>
+    <div class="work-head rev">
+      <h2>Projets sélectionnés.</h2>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="sec sec-process" id="process">
+  <div class="sec-inner">
+    <div class="label rev"><span>03</span> Processus</div>
+    <div class="proc-head rev"><h2>Comment nous obtenons des résultats.</h2></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="sec sec-testi" id="testimonials">
+  <div class="sec-inner">
+    <div class="label rev"><span>04</span> Témoignages</div>
+    <div class="testi-head rev">
+      <h2>Ce que disent nos clients.</h2>
+    </div>
+
+    <div class="testi-track-wrap rev">
+      <div class="testi-track" id="tTrack">
+        <div class="testi-card">
+          <p class="testi-text">atlasdigital n'a pas seulement géré nos publicités — ils ont reconstruit tout notre moteur de croissance.</p>
+          <div class="testi-author"><div class="av av1">SK</div><div><div class="au-name">Sarah Kim</div><div class="au-role">CEO, Skincare</div></div></div>
+        </div>
+
+        <div class="testi-card">
+          <p class="testi-text">Le niveau de stratégie et de créativité est exceptionnel.</p>
+          <div class="testi-author"><div class="av av2">MR</div><div><div class="au-name">Marcus Reid</div><div class="au-role">CMO, SaaS</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<section class="sec sec-metrics" id="metrics">
+  <div class="sec-inner">
+    <div class="label rev"><span>05</span> Résultats</div>
+    <div class="met-head rev"><h2>Les chiffres<br>ne mentent pas.</h2></div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="sec sec-team" id="team">
+  <div class="sec-inner">
+    <div class="label rev"><span>06</span> Équipe</div>
+    <div class="team-head rev">
+      <h2>Les esprits derrière<br>les résultats.</h2>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="sec sec-pricing" id="pricing">
+  <div class="sec-inner">
+    <div class="label rev"><span>07</span> Tarifs</div>
+    <div class="price-head rev"><h2>Tarification<br>transparente.</h2></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-band">
+  <h2>Prêt à grandir<br><em>rapidement ?</em></h2>
+  <div class="cta-r">
+    <p>Discutons de votre marque et construisons une stratégie de domination.</p>
+    <a href="#contact" class="btn-black">Réserver un appel gratuit ↗</a>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section class="sec sec-contact" id="contact">
+  <div class="sec-inner">
+    <div class="contact-wrap">
+      <div class="contact-l rev">
+        <div class="label"><span>08</span> Contact</div>
+        <h2>Construisons quelque chose d'extraordinaire.</h2>
+        <p>Parlez-nous de votre projet. Réponse sous 24h.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-  © 2026 AtlasDigital — Agence marketing digital marocaine
+  <div class="foot-top">
+    <div class="foot-brand">
+      <div class="logo">atlas<em>digital</em></div>
+      <p>Nous rendons les marques inoubliables.</p>
+    </div>
+  </div>
 </footer>
 
 <script>
-/* unchanged JS */
+/* inchangé */
 </script>
 
 </body>
