@@ -1,1 +1,879 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas Digital — Agence de Marketing Digital | Casablanca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  :root {
+    --navy: #0B1E3E;
+    --navy2: #102952;
+    --navy3: #1A3A6B;
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --gold-pale: #F5E6B8;
+    --white: #FFFFFF;
+    --off-white: #F7F5EF;
+    --gray: #E4E0D5;
+    --muted: #8B8575;
+    --text: #2A2218;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ── CUSTOM CURSOR ── */
+  .cursor {
+    position: fixed; top: 0; left: 0;
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, background 0.3s;
+  }
+  .cursor-ring {
+    position: fixed; top: 0; left: 0;
+    width: 36px; height: 36px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, opacity 0.3s;
+    opacity: 0.6;
+  }
+  .cursor.hover { width: 14px; height: 14px; background: var(--gold-light); }
+  .cursor-ring.hover { width: 50px; height: 50px; opacity: 0.3; background: rgba(201, 168, 76, 0.1); }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 2rem 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background 0.4s, backdrop-filter 0.4s, padding 0.3s, border-color 0.4s;
+    border-bottom: 1px solid transparent;
+  }
+  nav.scrolled {
+    background: rgba(11, 30, 62, 0.96);
+    backdrop-filter: blur(16px);
+    padding: 1.2rem 5%;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 700;
+    color: var(--white); letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  nav.scrolled .nav-logo { color: var(--white); }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+  .nav-links a {
+    color: rgba(255,255,255,0.75); font-size: 0.82rem;
+    text-decoration: none; letter-spacing: 0.12em;
+    text-transform: uppercase; font-weight: 400;
+    position: relative; transition: color 0.2s;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px; background: var(--gold);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+  
+  .nav-cta {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold) !important;
+    padding: 0.6rem 1.6rem;
+    font-size: 0.78rem !important;
+    letter-spacing: 0.14em !important;
+    text-transform: uppercase;
+    transition: background 0.3s, color 0.3s, transform 0.3s !important;
+  }
+  .nav-cta:hover { background: var(--gold) !important; color: var(--navy) !important; transform: translateY(-1px); }
+  .nav-cta::after { display: none !important; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    background: var(--navy);
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding: 0 5%;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 80% 40%, rgba(26,58,107,0.6) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 50% at 20% 80%, rgba(201,168,76,0.08) 0%, transparent 60%);
+  }
+  .hero-bg::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4; pointer-events: none;
+  }
+  .ring {
+    position: absolute; border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.15);
+    pointer-events: none;
+  }
+  .ring-1 { width: 700px; height: 700px; right: -180px; top: -180px; }
+  .ring-2 { width: 480px; height: 480px; right: -60px; top: -60px; border-color: rgba(201,168,76,0.1); }
+  .ring-3 { width: 260px; height: 260px; right: 60px; top: 60px; border-color: rgba(201,168,76,0.2); }
+  .ring-4 { width: 140px; height: 140px; right: 130px; top: 130px; background: rgba(201,168,76,0.06); border: none; }
+
+  .hero-line {
+    position: absolute; left: 5%; top: 0; bottom: 0;
+    width: 1px; background: linear-gradient(to bottom, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
+    opacity: 0.4;
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 800px;
+    animation: heroFadeIn 1.2s ease-out both;
+  }
+  @keyframes heroFadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    color: var(--gold); font-size: 0.75rem; letter-spacing: 0.2em;
+    text-transform: uppercase; margin-bottom: 2rem;
+  }
+  .hero-tag::before {
+    content: ''; display: block; width: 30px; height: 1px; background: var(--gold);
+  }
+  .hero-h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.2rem, 7.5vw, 6.5rem);
+    font-weight: 700; line-height: 1.02;
+    color: var(--white);
+  }
+  .hero-h1 em {
+    font-style: italic; color: var(--gold);
+    font-weight: 400;
+  }
+  .hero-sub {
+    margin-top: 2rem; max-width: 520px;
+    font-size: 1rem; line-height: 1.7;
+    color: rgba(255,255,255,0.6); font-weight: 300;
+  }
+  .hero-actions {
+    display: flex; gap: 1.5rem; margin-top: 3rem; flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--gold); color: var(--navy);
+    padding: 1rem 2.4rem; font-size: 0.82rem;
+    font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; border: none;
+    transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(201,168,76,0.15); }
+  
+  .btn-outline {
+    background: transparent; color: var(--white);
+    padding: 1rem 2.4rem; font-size: 0.82rem;
+    font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; border: 1px solid rgba(255,255,255,0.25);
+    display: inline-block; transition: border-color 0.25s, color 0.25s, transform 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 5%;
+    display: flex; align-items: center; gap: 0.8rem;
+    color: rgba(255,255,255,0.4); font-size: 0.72rem; letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 40px; height: 1px; background: rgba(255,255,255,0.25);
+    position: relative; overflow: hidden;
+  }
+  .scroll-line::after {
+    content: ''; position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%; background: var(--gold);
+    animation: scrollAnim 2s ease-in-out infinite;
+  }
+  @keyframes scrollAnim {
+    0% { left: -100%; } 50% { left: 100%; } 100% { left: 100%; }
+  }
+
+  .hero-stats {
+    position: absolute; right: 5%; bottom: 3rem;
+    display: flex; flex-direction: column; gap: 2rem;
+    z-index: 2;
+  }
+  .hero-stat { text-align: right; }
+  .hero-stat-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.6rem; font-weight: 600; color: var(--gold);
+    line-height: 1;
+  }
+  .hero-stat-label {
+    font-size: 0.7rem; color: rgba(255,255,255,0.4);
+    letter-spacing: 0.12em; text-transform: uppercase; margin-top: 0.3rem;
+  }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 8rem 5%; }
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    color: var(--gold); font-size: 0.72rem; letter-spacing: 0.2em;
+    text-transform: uppercase; margin-bottom: 1.2rem;
+  }
+  .section-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--gold); }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 600; line-height: 1.1; color: var(--navy);
+  }
+  .section-title em { font-style: italic; color: var(--gold); font-weight: 400; }
+  .gold-rule { width: 60px; height: 1px; background: var(--gold); margin: 2rem 0; }
+
+  /* ── ABOUT ── */
+  #about {
+    background: var(--off-white);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;
+  }
+  .about-visual { position: relative; height: 520px; }
+  .about-card-main {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy3) 100%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 3rem; position: relative; border-top: 2px solid var(--gold);
+    overflow: hidden;
+  }
+  .about-card-main::before {
+    content: ''; position: absolute; top: -60px; right: -60px;
+    width: 300px; height: 300px; border-radius: 50%; border: 1px solid rgba(201,168,76,0.15);
+  }
+  .about-card-main::after {
+    content: ''; position: absolute; top: 0; right: 0;
+    width: 120px; height: 120px; border-radius: 50%; border: 1px solid rgba(201,168,76,0.1);
+  }
+  .about-big-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 9rem; font-weight: 700;
+    color: rgba(201,168,76,0.08); line-height: 1;
+    position: absolute; top: 1.5rem; left: 2rem; pointer-events: none;
+  }
+  .about-card-label { font-size: 0.72rem; color: var(--gold); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 0.8rem; position: relative; z-index: 2;}
+  .about-card-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; color: var(--white); line-height: 1.3; font-weight: 300; font-style: italic;
+    position: relative; z-index: 2;
+  }
+  .about-float {
+    position: absolute; bottom: -20px; right: -20px;
+    width: 200px; background: var(--gold); padding: 2rem; z-index: 2;
+    box-shadow: 0 15px 35px rgba(11,30,62,0.15);
+  }
+  .about-float-num { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 700; color: var(--navy); line-height: 1; }
+  .about-float-text { font-size: 0.72rem; color: var(--navy); opacity: 0.8; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.5rem; font-weight: 500; }
+
+  .about-text p { font-size: 0.98rem; line-height: 1.8; color: var(--muted); font-weight: 300; margin-bottom: 1.2rem; }
+  .about-pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 2.5rem; }
+  .pillar { padding: 1.6rem; border: 1px solid var(--gray); position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s, background-color 0.3s; }
+  .pillar::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; background: var(--gold); transition: height 0.3s; }
+  .pillar:hover { border-color: var(--gold); transform: translateY(-3px); background: var(--white); }
+  .pillar:hover::before { height: 100%; }
+  .pillar-title { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem; }
+  .pillar-text { font-size: 0.85rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+
+  /* ── SERVICES ── */
+  #services { background: var(--navy); position: relative; overflow: hidden; }
+  #services::before {
+    content: ''; position: absolute; top: -200px; right: -200px;
+    width: 600px; height: 600px; border-radius: 50%; border: 1px solid rgba(201,168,76,0.05); pointer-events: none;
+  }
+  .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5rem; flex-wrap: wrap; gap: 2rem; }
+  .services-header .section-title { color: var(--white); }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; background: rgba(201,168,76,0.12); }
+  .service-card { background: var(--navy); padding: 3.2rem 2.4rem; position: relative; overflow: hidden; transition: background 0.4s; }
+  .service-card::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--navy3) 0%, var(--navy) 100%); opacity: 0; transition: opacity 0.4s; z-index: 0;
+  }
+  .service-card:hover { background: var(--navy2); }
+  .service-card:hover::after { opacity: 1; }
+  .service-num { font-family: 'Cormorant Garamond', serif; font-size: 4rem; font-weight: 700; color: rgba(201,168,76,0.1); line-height: 1; margin-bottom: 1.2rem; transition: color 0.3s; position: relative; z-index: 1;}
+  .service-card:hover .service-num { color: rgba(201,168,76,0.25); }
+  .service-icon { width: 42px; height: 42px; margin-bottom: 1.6rem; position: relative; z-index: 1; }
+  .service-icon svg { width: 100%; height: 100%; }
+  .service-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; color: var(--white); margin-bottom: 1rem; position: relative; z-index: 1; transition: color 0.3s; }
+  .service-card:hover .service-title { color: var(--gold-light); }
+  .service-desc { font-size: 0.88rem; line-height: 1.7; color: rgba(255,255,255,0.45); font-weight: 300; position: relative; z-index: 1; }
+  .service-arrow {
+    position: absolute; bottom: 2rem; right: 2rem; width: 38px; height: 38px; border: 1px solid rgba(201,168,76,0.2);
+    display: flex; align-items: center; justify-content: center; transition: background 0.3s, border-color 0.3s, transform 0.3s; z-index: 1;
+  }
+  .service-card:hover .service-arrow { background: var(--gold); border-color: var(--gold); transform: translate(2px, -2px); }
+  .service-arrow svg { width: 14px; height: 14px; stroke: var(--gold); fill: none; transition: stroke 0.3s; }
+  .service-card:hover .service-arrow svg { stroke: var(--navy); }
+
+  /* ── PROCESS / METHOD ── */
+  #process { background: var(--off-white); }
+  .process-layout { display: grid; grid-template-columns: 1fr 1.8fr; gap: 6rem; align-items: start; margin-top: 4rem; }
+  .process-sticky { position: sticky; top: 8rem; }
+  .process-steps { display: flex; flex-direction: column; }
+  .process-step { display: flex; gap: 2rem; padding: 2.2rem 0; border-bottom: 1px solid var(--gray); position: relative; transition: padding-left 0.3s; }
+  .process-step::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--gold); transition: width 0.3s; }
+  .process-step:hover { padding-left: 1.2rem; }
+  .process-step:hover::before { width: 2px; }
+  .step-num { font-family: 'Cormorant Garamond', serif; font-size: 0.85rem; color: var(--gold); letter-spacing: 0.12em; min-width: 35px; margin-top: 0.2rem; font-weight: 600; }
+  .step-content { flex: 1; }
+  .step-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: var(--navy); margin-bottom: 0.5rem; }
+  .step-text { font-size: 0.88rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+
+  .process-visual { background: var(--navy); padding: 3.5rem; border-top: 2px solid var(--gold); overflow: hidden; position: relative; }
+  .process-visual::before { content: ''; position: absolute; bottom: -100px; right: -100px; width: 350px; height: 350px; border-radius: 50%; border: 1px solid rgba(201,168,76,0.08); }
+  .kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(201,168,76,0.15); }
+  .kpi-box { background: var(--navy2); padding: 2rem 1.5rem; transition: background 0.3s; }
+  .kpi-box:hover { background: var(--navy3); }
+  .kpi-val { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 700; color: var(--gold); line-height: 1; }
+  .kpi-label { font-size: 0.72rem; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.5rem; font-weight: 500; }
+  .process-quote { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid rgba(201,168,76,0.15); }
+  .process-quote p { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-style: italic; color: rgba(255,255,255,0.6); line-height: 1.6; }
+  .process-quote span { display: block; margin-top: 0.8rem; font-size: 0.72rem; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; }
+
+  /* ── RESULTS ── */
+  #results { background: var(--navy); position: relative; overflow: hidden; }
+  #results .section-title { color: var(--white); }
+  .results-inner { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(201,168,76,0.15); margin-top: 5rem; }
+  .result-item { background: var(--navy); padding: 4rem 3rem; position: relative; overflow: hidden; }
+  .result-item::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.5s ease; }
+  .result-item:hover::before { transform: scaleX(1); }
+  .result-num { font-family: 'Cormorant Garamond', serif; font-size: 4.5rem; font-weight: 700; color: var(--gold); line-height: 1; }
+  .result-label { font-size: 0.88rem; color: rgba(255,255,255,0.5); margin-top: 0.8rem; line-height: 1.6; font-weight: 300; }
+  .result-bar { width: 100%; height: 1px; background: rgba(201,168,76,0.15); margin: 1.8rem 0; position: relative; overflow: hidden; }
+  .result-bar-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--gold); width: 0; transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1); }
+
+  /* ── TESTIMONIALS ── */
+  #testimonials { background: var(--off-white); }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem; margin-top: 4rem; }
+  .testimonial-card { background: var(--white); padding: 2.8rem; border: 1px solid var(--gray); position: relative; overflow: hidden; transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; }
+  .testimonial-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 20px 50px rgba(11,30,62,0.06); }
+  .testimonial-card::before { content: '"'; font-family: 'Cormorant Garamond', serif; font-size: 9rem; color: rgba(201,168,76,0.07); position: absolute; top: -1.5rem; left: 1rem; line-height: 1; pointer-events: none; }
+  .stars { color: var(--gold); font-size: 0.75rem; margin-bottom: 1.2rem; letter-spacing: 0.2em; }
+  .testimonial-text { font-size: 0.92rem; line-height: 1.8; color: var(--muted); font-style: italic; margin-bottom: 1.8rem; position: relative; z-index: 1; font-weight: 300; }
+  .testimonial-rule { width: 30px; height: 1px; background: var(--gold); margin-bottom: 1.2rem; }
+  .testimonial-name { font-size: 0.88rem; font-weight: 500; color: var(--navy); }
+  .testimonial-role { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; font-weight: 300; }
+
+  /* ── CTA / CONTACT ── */
+  #cta { background: var(--navy); text-align: center; position: relative; overflow: hidden; padding: 10rem 5%; }
+  #cta::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(26,58,107,0.5) 0%, transparent 70%); }
+  .cta-ring-1 { width: 600px; height: 600px; top: 50%; left: 50%; transform: translate(-50%,-50%); border-color: rgba(201,168,76,0.08); }
+  .cta-ring-2 { width: 400px; height: 400px; top: 50%; left: 50%; transform: translate(-50%,-50%); border-color: rgba(201,168,76,0.05); }
+  #cta .section-tag { justify-content: center; }
+  #cta .section-title { color: var(--white); max-width: 800px; margin: 0 auto; }
+  .cta-sub { max-width: 500px; margin: 1.5rem auto 3.5rem; font-size: 0.98rem; color: rgba(255,255,255,0.5); line-height: 1.7; font-weight: 300; }
+  .cta-actions { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; position: relative; z-index: 2; }
+
+  /* ── FOOTER ── */
+  footer { background: #060E1C; padding: 5rem 5% 2.5rem; border-top: 1px solid rgba(201,168,76,0.15); }
+  .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 4rem; padding-bottom: 4rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 700; color: var(--white); letter-spacing: 0.04em; display: block; margin-bottom: 1.2rem; text-decoration: none; }
+  .footer-logo span { color: var(--gold); }
+  .footer-brand p { font-size: 0.85rem; color: rgba(255,255,255,0.35); line-height: 1.7; max-width: 260px; font-weight: 300; }
+  .footer-col h4 { font-size: 0.72rem; color: var(--gold); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 1.5rem; font-weight: 600; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+  .footer-col ul a { font-size: 0.85rem; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; font-weight: 300; }
+  .footer-col ul a:hover { color: var(--gold); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 2.5rem; flex-wrap: wrap; gap: 1.5rem; }
+  .footer-bottom p { font-size: 0.78rem; color: rgba(255,255,255,0.25); font-weight: 300; }
+  .footer-socials { display: flex; gap: 1rem; }
+  .footer-socials a { width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; text-decoration: none; transition: border-color 0.2s, background 0.2s; font-size: 0.75rem; color: rgba(255,255,255,0.4); }
+  .footer-socials a:hover { border-color: var(--gold); background: var(--gold); color: var(--navy); }
+
+  /* ── REVEAL ANIMATIONS ── */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.15s; }
+  .reveal-delay-2 { transition-delay: 0.3s; }
+  .reveal-delay-3 { transition-delay: 0.45s; }
+
+  /* Responsive breakpoints */
+  @media (max-width: 1024px) {
+    #about { grid-template-columns: 1fr; gap: 4rem; }
+    .about-visual { height: 420px; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .process-layout { grid-template-columns: 1fr; gap: 4rem; }
+    .process-sticky { position: static; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .hero-stats { display: none; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 1.5rem 5%; }
+    .nav-links { display: none; }
+    .services-grid { grid-template-columns: 1fr; }
+    .results-inner { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; gap: 2.5rem; }
+    section { padding: 6rem 5%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Elements de curseurs fluides -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAVIGATION -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Atlas<span>Digital.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">L'agence</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Méthode</a></li>
+    <li><a href="#results">Impact</a></li>
+    <li><a href="#cta" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="ring ring-1"></div>
+  <div class="ring ring-2"></div>
+  <div class="ring ring-3"></div>
+  <div class="ring ring-4"></div>
+  <div class="hero-line"></div>
+
+  <div class="hero-content">
+    <div class="hero-tag">Casablanca — Vision de Croissance</div>
+    <h1 class="hero-h1">
+      Bâtir votre<br>
+      <em>autorité digitale,</em><br>
+      générer la valeur.
+    </h1>
+    <p class="hero-sub">Atlas Digital fusionne l'analyse rigoureuse des données et la création d'élite pour positionner les leaders du marché marocain et africain en première ligne du numérique.</p>
+    <div class="hero-actions">
+      <a href="#services" class="btn-primary">Explorer l'expertise</a>
+      <a href="#cta" class="btn-outline">Engager la discussion</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-value">×4.2</div>
+      <div class="hero-stat-label">ROAS Moyen Constaté</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-value">+55%</div>
+      <div class="hero-stat-label">Taux de Conversion Client</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-value">15M+</div>
+      <div class="hero-stat-label">Impact Portée Annuelle</div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Défiler
+  </div>
+</section>
+
+<!-- À PROPOS -->
+<section id="about">
+  <div class="about-visual reveal">
+    <div class="about-card-main">
+      <div class="about-big-num">ATLAS</div>
+      <div class="about-card-label">Notre positionnement</div>
+      <div class="about-card-text">"Transformer le paysage numérique des marques à forte ambition depuis Casablanca."</div>
+    </div>
+    <div class="about-float">
+      <div class="about-float-num">01.</div>
+      <div class="about-float-text">Boutique d'élite digitale</div>
+    </div>
+  </div>
+
+  <div class="about-text">
+    <div class="section-tag reveal">Notre Manifeste</div>
+    <h2 class="section-title reveal reveal-delay-1">
+      L'excellence technologique<br>au service du <em>rendement.</em>
+    </h2>
+    <div class="gold-rule reveal reveal-delay-2"></div>
+    <p class="reveal reveal-delay-2">Nous refusons les tactiques de vanité. Les likes et l'engagement superficiel ne font pas croître un bilan comptable. Chez Atlas Digital, chaque pixel produit, chaque ligne de code écrite et chaque budget publicitaire investi sert un objectif précis : l'acquisition de valeur tangible.</p>
+    <p class="reveal reveal-delay-3">Implantés au cœur économique de Casablanca, nous concevons des écosystèmes marketing intégrés et hautement sophistiqués pour les entreprises qui exigent la précision.</p>
+
+    <div class="about-pillars reveal reveal-delay-3">
+      <div class="pillar">
+        <div class="pillar-title">Architecture Data</div>
+        <div class="pillar-text">Zéro intuition empirique. Des décisions dictées par des modèles de tracking rigoureux.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-title">Rendement ROI-Driven</div>
+        <div class="pillar-text">Chaque dirham déployé est tracé pour maximiser le coût d'acquisition client (CAC).</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-title">Ingénierie de Conversion</div>
+        <div class="pillar-text">Frameworks de tests A/B complexes menés en continu sur vos entonnoirs de vente.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-title">Synergie Territoriale</div>
+        <div class="pillar-text">Compréhension fine des dynamiques d’achat marocaines et panafricaines.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES (6 LEVIERS) -->
+<section id="services">
+  <div class="services-header">
+    <div>
+      <div class="section-tag reveal" style="color:var(--gold)">Notre Arsenal Tactique</div>
+      <h2 class="section-title reveal reveal-delay-1">Nos <em>6 architectures</em><br>de performance</h2>
+    </div>
+    <a href="#cta" class="btn-primary reveal reveal-delay-2">Établir un plan de croissance</a>
+  </div>
+
+  <div class="services-grid reveal">
+    <!-- Service 01 -->
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 40 40"><circle cx="18" cy="18" r="10" stroke="#C9A84C" stroke-width="1.5"/><path d="M26 26L34 34" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><path d="M18 12V24M12 18H24" stroke="#C9A84C" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="service-title">SEO & Autorité Organique</div>
+      <div class="service-desc">Optimisation technique sémantique et Netlinking de haut niveau pour capturer les requêtes stratégiques sur Google.</div>
+      <div class="service-arrow"><svg viewBox="0 0 14 14"><path d="M2 12L12 2M12 2H6M12 2V8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+
+    <!-- Service 02 -->
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 40 40"><rect x="4" y="10" width="32" height="22" rx="2" stroke="#C9A84C" stroke-width="1.5"/><path d="M14 22L18 18L22 21L28 15" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="28" cy="15" r="2" fill="#C9A84C"/></svg>
+      </div>
+      <div class="service-title">Paid Media (Google & Meta)</div>
+      <div class="service-desc">Algorithmes d’enchères avancés, architectures de campagnes omnicanales pour un ciblage à haute conversion.</div>
+      <div class="service-arrow"><svg viewBox="0 0 14 14"><path d="M2 12L12 2M12 2H6M12 2V8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+
+    <!-- Service 03 -->
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 40 40"><path d="M20 8C14 8 10 12 10 16C10 20 14 23 18 24L20 32L22 24C26 23 30 20 30 16C30 12 26 8 20 8Z" stroke="#C9A84C" stroke-width="1.5" stroke-linejoin="round"/><circle cx="20" cy="16" r="3" stroke="#C9A84C" stroke-width="1.2"/></svg>
+      </div>
+      <div class="service-title">Social Content Strategy</div>
+      <div class="service-desc">Direction de création à fort impact esthétique. Récits de marques et vidéos conçus spécifiquement pour captiver.</div>
+      <div class="service-arrow"><svg viewBox="0 0 14 14"><path d="M2 12L12 2M12 2H6M12 2V8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+
+    <!-- Service 04 -->
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 40 40"><rect x="6" y="10" width="28" height="20" rx="2" stroke="#C9A84C" stroke-width="1.5"/><path d="M6 16L20 23L34 16" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </div>
+      <div class="service-title">Automation & Cycle CRM</div>
+      <div class="service-desc">Rétention client maximale via des tunnels automatisés de newsletters et de relances ultra-segmentées.</div>
+      <div class="service-arrow"><svg viewBox="0 0 14 14"><path d="M2 12L12 2M12 2H6M12 2V8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+
+    <!-- Service 05 -->
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 40 40"><path d="M8 32L8 20M16 32V14M24 32V18M32 32V8" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><path d="M6 20L10 16M14 14L18 10M22 18L26 14M30 8L34 4" stroke="#C9A84C" stroke-width="1" stroke-linecap="round" opacity="0.5"/></svg>
+      </div>
+      <div class="service-title">CRO & Optimisation Entonnoir</div>
+      <div class="service-desc">Audits d'expérience utilisateur (UX/UI) comportementaux et cartes de chaleur pour multiplier vos taux de clic et d'achat.</div>
+      <div class="service-arrow"><svg viewBox="0 0 14 14"><path d="M2 12L12 2M12 2H6M12 2V8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+
+    <!-- Service 06 -->
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 40 40"><path d="M12 14L20 6L28 14M12 26L20 34L28 26" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 20H34" stroke="#C9A84C" stroke-width="1.5"/></svg>
+      </div>
+      <div class="service-title">Web Design Élite & Connecté</div>
+      <div class="service-desc">Conception d'interfaces web ultra-rapides, épurées et taillées pour la conversion technologique pure.</div>
+      <div class="service-arrow"><svg viewBox="0 0 14 14"><path d="M2 12L12 2M12 2H6M12 2V8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+  </div>
+</section>
+
+<!-- METHODE / PROCESS -->
+<section id="process">
+  <div class="section-tag reveal">Ingénierie Opérationnelle</div>
+  <h2 class="section-title reveal reveal-delay-1">Notre méthode de <em>Précision</em></h2>
+  
+  <div class="process-layout">
+    <div class="process-sticky reveal">
+      <div class="process-visual">
+        <div class="kpi-grid">
+          <div class="kpi-box">
+            <div class="kpi-val">14 j</div>
+            <div class="kpi-label">Premier Audit</div>
+          </div>
+          <div class="kpi-box">
+            <div class="kpi-val">Daily</div>
+            <div class="kpi-label">Suivi Données</div>
+          </div>
+        </div>
+        <div class="process-quote">
+          <p>"La clarté structurelle devance toujours la vitesse d'exécution."</p>
+          <span>— L'Équipe Technique</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-steps">
+      <div class="process-step reveal">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h3 class="step-title">Audit Profond & Reverse Engineering</h3>
+          <p class="step-text">Analyse complète de vos données historiques, de l'infrastructure de vos concurrents directs et identification de vos failles d'acquisition.</p>
+        </div>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h3 class="step-title">Déploiement de l'Infrastructure</h3>
+          <p class="step-text">Mise en place de protocoles de tracking avancés (Server-Side, API de conversions) pour garantir une attribution exacte de chaque lead.</p>
+        </div>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h3 class="step-title">Lancement Multi-Canal Polarisé</h3>
+          <p class="step-text">Déploiement synchronisé des campagnes payantes et des structures sémantiques de contenu. Prise de possession de l'espace digital.</p>
+        </div>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <h3 class="step-title">Optimisation Scalable Continue</h3>
+          <p class="step-text">A/B testing des landing pages, affinement itératif des budgets sur les segments les plus vertueux pour faire grimper le ROAS.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT / RESULTATS -->
+<section id="results">
+  <div class="section-tag reveal" style="color:var(--gold)">Preuves Statistiques</div>
+  <h2 class="section-title reveal reveal-delay-1">Indicateurs clés de <em>Performance</em></h2>
+
+  <div class="results-inner reveal">
+    <div class="result-item" data-target="88">
+      <div class="result-num">+88%</div>
+      <div class="result-label">Augmentation moyenne du trafic organique qualifié sous 6 mois d'exercice.</div>
+      <div class="result-bar"><div class="result-bar-fill" data-width="88%"></div></div>
+    </div>
+    <div class="result-item" data-target="40">
+      <div class="result-num">4.2M</div>
+      <div class="result-label">Dirhams d'économies générés sur l'attribution publicitaire optimisée.</div>
+      <div class="result-bar"><div class="result-bar-fill" data-width="65%"></div></div>
+    </div>
+    <div class="result-item" data-target="310">
+      <div class="result-num">×3.1</div>
+      <div class="result-label">Multiplication du volume global de leads B2B haut de gamme capturés.</div>
+      <div class="result-bar"><div class="result-bar-fill" data-width="92%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-tag reveal">Témoignages</div>
+  <h2 class="section-title reveal reveal-delay-1">Ils ont choisi la <em>rigueur</em></h2>
+
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"L'approche chirurgicale d'Atlas Digital sur nos architectures Google Ads a radicalement changé notre flux de leads qualifiés à Casablanca. Un travail d'une netteté rare."</p>
+      <div class="testimonial-rule"></div>
+      <div class="testimonial-name">Karim Benjelloun</div>
+      <div class="testimonial-role">Directeur Associé — Nexus Real Estate</div>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-1">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"Au-delà des compétences en marketing, c'est la maîtrise technologique de la data qui nous a impressionnés. Les rapports hebdomadaires sont limpides et axés profits."</p>
+      <div class="testimonial-rule"></div>
+      <div class="testimonial-name">Yasmine Alami</div>
+      <div class="testimonial-role">Directrice Marketing — Inova Health</div>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-2">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"Grâce à leur refonte sémantique SEO, notre plateforme e-commerce est devenue la référence absolue nationale. Plus de 35% de croissance organique pérenne."</p>
+      <div class="testimonial-rule"></div>
+      <div class="testimonial-name">Omar Tazi</div>
+      <div class="testimonial-role">Fondateur — Artisanat Luxe Maroc</div>
+    </div>
+  </div>
+</section>
+
+<!-- CALL TO ACTION -->
+<section id="cta">
+  <div class="ring ring-1 cta-ring-1"></div>
+  <div class="ring ring-2 cta-ring-2"></div>
+  
+  <div style="position: relative; z-index: 2;">
+    <div class="section-tag" style="color:var(--gold)">Planification Stratégique</div>
+    <h2 class="section-title">Prêts à initier votre <em>transformation ?</em></h2>
+    <p class="cta-sub">Discutons de vos goulots d'étranglement marketing actuels. Aucun engagement commercial lors de ce premier diagnostic technique d'une demi-heure.</p>
+    <div class="cta-actions">
+      <a href="mailto:contact@atlasdigital.ma" class="btn-primary">Solliciter un entretien</a>
+      <a href="#services" class="btn-outline">Revoir nos expertises</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="footer-logo">Atlas<span>Digital.</span></a>
+      <p>Cabinet conseil et ingénierie de croissance numérique basé au pôle d'affaires de Casablanca.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="#about">L'agence</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#process">Méthode</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Expertises</h4>
+      <ul>
+        <li><a href="#services">SEO Technique</a></li>
+        <li><a href="#services">Paid Media Strategy</a></li>
+        <li><a href="#services">Data Architecture</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Localisation</h4>
+      <p style="font-size:0.85rem; color:rgba(255,255,255,0.4); font-weight:300; line-height:1.6;">
+        Bd d'Anfa, Quartier Gauthier<br>
+        Casablanca, Maroc
+      </p>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <p>&copy; 2026 Atlas Digital. Tous droits réservés. Haute facture numérique.</p>
+    <div class="footer-socials">
+      <a href="#">LN</a>
+      <a href="#">TW</a>
+      <a href="#">IG</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── CUSTOM INTERACTIVE CURSOR LOGIC ──
+  const cursor = document.getElementById('cursor');
+  const cursorRing = document.getElementById('cursorRing');
+  
+  let mouseX = 0, mouseY = 0;
+  let ringX = 0, ringY = 0;
+
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    
+    // Déplacement instantané pour le point central
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+  });
+
+  // Animation fluide par lerp pour l'anneau externe
+  function animateRing() {
+    ringX += (mouseX - ringX) * 0.15;
+    ringY += (mouseY - ringY) * 0.15;
+    
+    cursorRing.style.left = ringX + 'px';
+    cursorRing.style.top = ringY + 'px';
+    
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  // Effet d'aimant au survol des liens/boutons
+  const interactiveElements = document.querySelectorAll('a, button, .service-card, .pillar, .process-step, .footer-socials a');
+  interactiveElements.forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.classList.add('hover');
+      cursorRing.classList.add('hover');
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.classList.add('hover');
+      cursorRing.classList.remove('hover');
+    });
+  });
+
+  // ── NAVBAR SCROLL ACTION ──
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  });
+
+  // ── SCROLL REVEAL & BAR FILL ANIMATION ──
+  const revealElements = document.querySelectorAll('.reveal');
+  const barFills = document.querySelectorAll('.result-bar-fill');
+
+  const observerOptions = {
+    root: null,
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        
+        // Si c'est la section résultats, animer les barres de progression fines
+        if (entry.target.classList.contains('results-inner')) {
+          barFills.forEach(bar => {
+            bar.style.width = bar.getAttribute('data-width');
+          });
+        }
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  revealElements.forEach(el => observer.observe(el));
+  
+  // Observer spécifiquement la grille de résultats pour déclencher le remplissage des lignes
+  const resultsGrid = document.querySelector('.results-inner');
+  if (resultsGrid) observer.observe(resultsGrid);
+</script>
+
+</body>
+</html>
