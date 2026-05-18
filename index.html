@@ -3,174 +3,1304 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Atlas Digital — Haute Couture Marketing & Data Architecture</title>
+<title>Atlas Digital — Agence de Marketing Digital</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Plus+Jakarta+Sans:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg-dark: #0A0B0D;
-    --champagne: #F4F0E6;
-    --gold: #C5A880;
-    --gold-bright: #EAD7BA;
-    --slate: #8A8D93;
-    --font-serif: 'Cormorant Garamond', serif;
-    --font-sans: 'Plus Jakarta Sans', sans-serif;
-  }
+:root {
+  --navy: #0D1B2A;
+  --blue: #1A5276;
+  --teal: #0E8B78;
+  --teal-light: #12A98F;
+  --gold: #C9A84C;
+  --white: #F8F9FA;
+  --gray: #8896A7;
+  --light: #EEF2F7;
+  --card: #F2F6FB;
+  --font-head: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --radius: 14px;
+  --shadow: 0 8px 40px rgba(13,27,42,0.10);
+  --shadow-hover: 0 20px 60px rgba(13,27,42,0.18);
+  --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-  body {
-    background: var(--bg-dark);
-    color: var(--champagne);
-    font-family: var(--font-sans);
-    margin: 0;
-    cursor: none;
-    overflow-x: hidden;
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* ── CURSEUR D'INVERSION ── */
-  #cursor {
-    position: fixed;
-    width: 25px; height: 25px;
-    background: var(--champagne);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 10000;
-    mix-blend-mode: difference;
-    transform: translate(-50%, -50%);
-    transition: transform 0.15s ease-out;
-  }
+html { scroll-behavior: smooth; }
 
-  /* ── STRUCTURE ── */
-  .container { padding: 0 10vw; }
-  
-  header {
-    height: 12vh;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-  }
+body {
+  font-family: var(--font-body);
+  background: #fff;
+  color: var(--navy);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
 
-  .logo { font-family: var(--font-serif); font-size: 2rem; }
-  .logo span { color: var(--gold); font-style: italic; }
+/* ── PAGES ── */
+.page { display: none; animation: fadeUp 0.5s ease both; }
+.page.active { display: block; }
 
-  /* ── HERO TYPOGRAPHIQUE ── */
-  .hero {
-    height: 88vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
-  h1 {
-    font-family: var(--font-serif);
-    font-size: clamp(4rem, 10vw, 9rem);
-    line-height: 0.9;
-    font-weight: 300;
-    margin: 0;
-  }
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(13,27,42,0.07);
+  padding: 0 5vw;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 70px;
+  transition: var(--transition);
+}
+.nav-logo {
+  font-family: var(--font-head);
+  font-size: 1.4rem; font-weight: 800;
+  color: var(--navy); cursor: pointer;
+  letter-spacing: -0.5px;
+}
+.nav-logo span { color: var(--teal); }
+.nav-links { display: flex; gap: 6px; align-items: center; }
+.nav-links a {
+  font-family: var(--font-body); font-size: 0.88rem; font-weight: 500;
+  color: var(--navy); text-decoration: none; padding: 7px 14px;
+  border-radius: 8px; cursor: pointer;
+  transition: var(--transition); opacity: 0.75;
+}
+.nav-links a:hover, .nav-links a.active { background: var(--light); opacity: 1; }
+.nav-cta {
+  background: var(--navy) !important; color: #fff !important;
+  opacity: 1 !important; padding: 8px 20px !important;
+  border-radius: 8px !important;
+}
+.nav-cta:hover { background: var(--blue) !important; }
 
-  .accent { color: var(--gold); font-style: italic; }
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  background: var(--navy);
+  display: flex; align-items: center;
+  padding: 100px 5vw 80px;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 70% 50%, rgba(14,139,120,0.18) 0%, transparent 70%),
+              radial-gradient(ellipse 40% 50% at 10% 80%, rgba(26,82,118,0.25) 0%, transparent 60%);
+}
+.hero-grid {
+  position: absolute; inset: 0; opacity: 0.04;
+  background-image: linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-content { position: relative; z-index: 1; max-width: 680px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(14,139,120,0.15); border: 1px solid rgba(14,139,120,0.3);
+  color: var(--teal-light); padding: 6px 14px; border-radius: 50px;
+  font-size: 0.78rem; font-weight: 500; letter-spacing: 0.5px;
+  margin-bottom: 28px; text-transform: uppercase;
+}
+.hero-badge::before { content: '●'; font-size: 0.5rem; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.3} }
 
-  .hero-meta {
-    margin-top: 4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    color: var(--slate);
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 0.3em;
-  }
+.hero h1 {
+  font-family: var(--font-head);
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 800; line-height: 1.05;
+  color: #fff; letter-spacing: -1.5px;
+  margin-bottom: 22px;
+}
+.hero h1 em { color: var(--teal-light); font-style: normal; }
+.hero p {
+  font-size: 1.1rem; color: rgba(255,255,255,0.65);
+  max-width: 520px; margin-bottom: 40px; line-height: 1.7; font-weight: 300;
+}
+.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--teal); color: #fff;
+  padding: 14px 30px; border-radius: 10px;
+  font-size: 0.95rem; font-weight: 600; cursor: pointer;
+  border: none; transition: var(--transition);
+  font-family: var(--font-body);
+}
+.btn-primary:hover { background: var(--teal-light); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(14,139,120,0.4); }
+.btn-outline {
+  background: transparent; color: rgba(255,255,255,0.85);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 14px 30px; border-radius: 10px;
+  font-size: 0.95rem; font-weight: 500; cursor: pointer;
+  transition: var(--transition); font-family: var(--font-body);
+}
+.btn-outline:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); }
 
-  /* ── SECTION D'IMPACT ── */
-  .section-grid {
-    padding: 15vh 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10vw;
-  }
+.hero-stats {
+  position: relative; z-index: 1;
+  margin-top: 70px; padding-top: 40px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex; gap: 50px; flex-wrap: wrap;
+}
+.stat-item h3 {
+  font-family: var(--font-head); font-size: 2.2rem; font-weight: 800;
+  color: #fff; letter-spacing: -1px;
+}
+.stat-item h3 span { color: var(--teal-light); }
+.stat-item p { font-size: 0.82rem; color: rgba(255,255,255,0.45); font-weight: 400; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
 
-  .label { color: var(--gold); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 2rem; }
-  
-  .desc {
-    font-family: var(--font-serif);
-    font-size: 2.2rem;
-    line-height: 1.4;
-    font-weight: 300;
-  }
+/* ── SECTION COMMON ── */
+section { padding: 100px 5vw; }
+.section-label {
+  display: inline-block; font-size: 0.75rem; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 14px;
+}
+.section-title {
+  font-family: var(--font-head); font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800; line-height: 1.1; letter-spacing: -1px; color: var(--navy);
+  margin-bottom: 18px;
+}
+.section-sub {
+  font-size: 1.05rem; color: var(--gray); max-width: 560px;
+  line-height: 1.7; font-weight: 300;
+}
 
-  /* ── SERVICES (Lignes de force) ── */
-  .service-row {
-    border-top: 1px solid rgba(255,255,255,0.1);
-    padding: 3rem 0;
-    display: flex;
-    justify-content: space-between;
-    transition: 0.5s;
-  }
+/* ── SERVICES GRID ── */
+.services-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 22px; margin-top: 56px;
+}
+.service-card {
+  background: var(--card); border-radius: var(--radius);
+  padding: 34px 30px; border: 1px solid #e4eaf2;
+  transition: var(--transition); cursor: default; position: relative; overflow: hidden;
+}
+.service-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--teal), var(--blue));
+  transform: scaleX(0); transform-origin: left; transition: var(--transition);
+}
+.service-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); border-color: rgba(14,139,120,0.2); }
+.service-card:hover::after { transform: scaleX(1); }
+.service-icon {
+  width: 52px; height: 52px; border-radius: 14px;
+  background: linear-gradient(135deg, var(--teal) 0%, var(--blue) 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; margin-bottom: 22px;
+}
+.service-card h3 {
+  font-family: var(--font-head); font-size: 1.15rem; font-weight: 700;
+  color: var(--navy); margin-bottom: 10px;
+}
+.service-card p { font-size: 0.9rem; color: var(--gray); line-height: 1.65; }
+.service-tag {
+  display: inline-block; margin-top: 16px; font-size: 0.72rem;
+  padding: 4px 10px; background: rgba(14,139,120,0.1); color: var(--teal);
+  border-radius: 50px; font-weight: 600; letter-spacing: 0.5px;
+}
 
-  .service-row:hover { padding-left: 50px; border-color: var(--gold); }
-  
-  .service-title { font-size: 3rem; font-family: var(--font-serif); }
+/* ── WHY US ── */
+.why-section { background: var(--navy); }
+.why-section .section-title { color: #fff; }
+.why-section .section-sub { color: rgba(255,255,255,0.5); }
+.why-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 28px; margin-top: 56px;
+}
+.why-card {
+  border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius);
+  padding: 30px 26px; transition: var(--transition);
+}
+.why-card:hover { background: rgba(255,255,255,0.05); border-color: rgba(14,139,120,0.4); }
+.why-num {
+  font-family: var(--font-head); font-size: 3rem; font-weight: 800;
+  color: rgba(14,139,120,0.25); line-height: 1; margin-bottom: 14px;
+}
+.why-card h4 { font-family: var(--font-head); font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+.why-card p { font-size: 0.88rem; color: rgba(255,255,255,0.45); line-height: 1.65; }
 
-  /* ── ANIMATION SIMPLE ── */
-  .reveal { opacity: 0; transform: translateY(50px); transition: 1s cubic-bezier(0.16, 1, 0.3, 1); }
-  .reveal.active { opacity: 1; transform: translateY(0); }
+/* ── PORTFOLIO ── */
+.portfolio-filters {
+  display: flex; gap: 10px; flex-wrap: wrap; margin: 40px 0;
+}
+.filter-btn {
+  padding: 8px 18px; border-radius: 50px; font-size: 0.83rem; font-weight: 500;
+  border: 1px solid #dde4ee; background: #fff; cursor: pointer;
+  transition: var(--transition); color: var(--navy);
+  font-family: var(--font-body);
+}
+.filter-btn.active, .filter-btn:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
 
+.portfolio-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+}
+.project-card {
+  border-radius: var(--radius); overflow: hidden;
+  border: 1px solid #e4eaf2; transition: var(--transition);
+  background: #fff;
+}
+.project-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-6px); }
+.project-thumb {
+  height: 220px; overflow: hidden; position: relative;
+  background: var(--light);
+}
+.project-thumb img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.project-card:hover .project-thumb img { transform: scale(1.06); }
+.project-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(13,27,42,0.7) 0%, transparent 60%);
+  opacity: 0; transition: var(--transition);
+  display: flex; align-items: flex-end; padding: 20px;
+}
+.project-card:hover .project-overlay { opacity: 1; }
+.overlay-tag {
+  background: var(--teal); color: #fff;
+  font-size: 0.75rem; font-weight: 600; padding: 5px 12px; border-radius: 50px;
+  letter-spacing: 0.5px;
+}
+.project-info { padding: 22px 22px 24px; }
+.project-cat {
+  font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--teal); margin-bottom: 6px;
+}
+.project-info h3 {
+  font-family: var(--font-head); font-size: 1.1rem; font-weight: 700;
+  color: var(--navy); margin-bottom: 8px;
+}
+.project-info p { font-size: 0.87rem; color: var(--gray); line-height: 1.6; }
+.project-result {
+  display: flex; gap: 16px; margin-top: 16px; padding-top: 16px;
+  border-top: 1px solid var(--light);
+}
+.result-stat { text-align: center; }
+.result-stat strong { display: block; font-family: var(--font-head); font-size: 1.1rem; font-weight: 800; color: var(--teal); }
+.result-stat span { font-size: 0.72rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* ── ABOUT ── */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.about-img-wrap { position: relative; border-radius: var(--radius); overflow: hidden; }
+.about-img-wrap img { width: 100%; height: 460px; object-fit: cover; display: block; border-radius: var(--radius); }
+.about-badge {
+  position: absolute; bottom: 30px; left: 30px;
+  background: var(--teal); color: #fff; padding: 16px 22px; border-radius: 12px;
+  font-family: var(--font-head);
+}
+.about-badge strong { display: block; font-size: 1.8rem; font-weight: 800; }
+.about-badge span { font-size: 0.78rem; opacity: 0.85; }
+.about-content .section-title { margin-bottom: 22px; }
+.about-content p { color: var(--gray); font-size: 0.97rem; line-height: 1.75; margin-bottom: 18px; font-weight: 300; }
+.values-list { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.value-tag {
+  padding: 8px 16px; background: var(--light); border-radius: 8px;
+  font-size: 0.85rem; font-weight: 500; color: var(--blue);
+}
+
+.team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 24px; margin-top: 56px; }
+.team-card { text-align: center; }
+.team-photo {
+  width: 100%; aspect-ratio: 1; border-radius: 16px; overflow: hidden;
+  background: var(--light); margin-bottom: 16px;
+}
+.team-photo img { width: 100%; height: 100%; object-fit: cover; }
+.team-card h4 { font-family: var(--font-head); font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+.team-card .role { font-size: 0.82rem; color: var(--teal); font-weight: 500; }
+.team-card .bio { font-size: 0.83rem; color: var(--gray); margin-top: 8px; line-height: 1.55; }
+
+/* ── PROCESS ── */
+.process-section { background: var(--light); }
+.process-steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0; margin-top: 56px; position: relative; }
+.process-step { padding: 30px 24px; position: relative; }
+.process-step:not(:last-child)::after {
+  content: '→'; position: absolute; right: -8px; top: 38px;
+  font-size: 1.4rem; color: var(--teal); z-index: 1;
+}
+.step-num {
+  font-family: var(--font-head); font-size: 3rem; font-weight: 800;
+  color: var(--teal); opacity: 0.2; line-height: 1;
+}
+.process-step h4 { font-family: var(--font-head); font-size: 0.95rem; font-weight: 700; color: var(--navy); margin: 8px 0; }
+.process-step p { font-size: 0.84rem; color: var(--gray); line-height: 1.6; }
+
+/* ── CONTACT ── */
+.contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 70px; align-items: start; }
+.contact-info h2 { font-family: var(--font-head); font-size: 2rem; font-weight: 800; margin-bottom: 16px; }
+.contact-info p { color: var(--gray); font-size: 0.97rem; line-height: 1.7; margin-bottom: 36px; font-weight: 300; }
+.contact-item { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 22px; }
+.contact-icon { width: 42px; height: 42px; background: var(--light); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+.contact-item h5 { font-weight: 600; font-size: 0.85rem; color: var(--navy); margin-bottom: 2px; }
+.contact-item p { font-size: 0.88rem; color: var(--gray); margin: 0; }
+
+.contact-form { background: #fff; border-radius: var(--radius); padding: 40px; border: 1px solid #e4eaf2; box-shadow: var(--shadow); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { margin-bottom: 18px; }
+.form-group label { display: block; font-size: 0.83rem; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+.form-group input, .form-group textarea, .form-group select {
+  width: 100%; padding: 12px 14px; border: 1px solid #dde4ee;
+  border-radius: 9px; font-size: 0.9rem; font-family: var(--font-body);
+  color: var(--navy); background: #fafbfd;
+  transition: var(--transition); outline: none;
+}
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+  border-color: var(--teal); background: #fff; box-shadow: 0 0 0 3px rgba(14,139,120,0.1);
+}
+.form-group textarea { height: 120px; resize: vertical; }
+.form-submit { width: 100%; padding: 14px; background: var(--navy); color: #fff; border: none; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; font-family: var(--font-body); transition: var(--transition); }
+.form-submit:hover { background: var(--blue); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(13,27,42,0.2); }
+.form-success { display: none; text-align: center; padding: 30px; color: var(--teal); }
+.form-success h3 { font-family: var(--font-head); font-size: 1.5rem; margin: 12px 0 8px; }
+
+/* ── PRICING ── */
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+.price-card {
+  border-radius: var(--radius); padding: 36px 30px; border: 1px solid #e4eaf2;
+  transition: var(--transition); position: relative; overflow: hidden;
+}
+.price-card.featured {
+  background: var(--navy); border-color: var(--navy); color: #fff;
+}
+.popular-badge {
+  position: absolute; top: 20px; right: 20px;
+  background: var(--teal); color: #fff; font-size: 0.72rem;
+  font-weight: 700; padding: 4px 12px; border-radius: 50px; text-transform: uppercase; letter-spacing: 1px;
+}
+.price-card h3 { font-family: var(--font-head); font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; }
+.price-card .plan-desc { font-size: 0.85rem; color: var(--gray); margin-bottom: 24px; }
+.price-card.featured .plan-desc { color: rgba(255,255,255,0.5); }
+.price-amount {
+  font-family: var(--font-head); font-size: 2.8rem; font-weight: 800;
+  color: var(--navy); line-height: 1; margin-bottom: 6px;
+}
+.price-card.featured .price-amount { color: #fff; }
+.price-amount span { font-size: 1rem; font-weight: 400; }
+.price-period { font-size: 0.82rem; color: var(--gray); margin-bottom: 28px; }
+.price-card.featured .price-period { color: rgba(255,255,255,0.4); }
+.price-features { list-style: none; margin-bottom: 32px; }
+.price-features li {
+  font-size: 0.88rem; padding: 7px 0; display: flex; align-items: center; gap: 10px;
+  border-bottom: 1px solid #f0f3f8; color: var(--navy);
+}
+.price-card.featured .price-features li { color: rgba(255,255,255,0.8); border-color: rgba(255,255,255,0.08); }
+.price-features li::before { content: '✓'; color: var(--teal); font-weight: 700; }
+.price-btn {
+  width: 100%; padding: 12px; border-radius: 9px; font-size: 0.92rem; font-weight: 600;
+  cursor: pointer; border: none; font-family: var(--font-body); transition: var(--transition);
+}
+.price-card:not(.featured) .price-btn { background: var(--light); color: var(--navy); }
+.price-card:not(.featured) .price-btn:hover { background: var(--navy); color: #fff; }
+.price-card.featured .price-btn { background: var(--teal); color: #fff; }
+.price-card.featured .price-btn:hover { background: var(--teal-light); }
+
+/* ── TESTIMONIALS ── */
+.testimonials-section { background: var(--light); }
+.testimonials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; margin-top: 56px; }
+.testimonial-card {
+  background: #fff; border-radius: var(--radius); padding: 30px;
+  border: 1px solid #e4eaf2; transition: var(--transition);
+}
+.testimonial-card:hover { box-shadow: var(--shadow); }
+.stars { color: var(--gold); font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 14px; }
+.testimonial-card blockquote { font-size: 0.93rem; color: var(--navy); line-height: 1.7; font-style: italic; margin-bottom: 20px; }
+.testimonial-author { display: flex; align-items: center; gap: 12px; }
+.author-avatar {
+  width: 44px; height: 44px; border-radius: 50%; overflow: hidden;
+  background: var(--light); flex-shrink: 0;
+}
+.author-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.author-info h5 { font-weight: 600; font-size: 0.9rem; color: var(--navy); }
+.author-info span { font-size: 0.78rem; color: var(--gray); }
+
+/* ── CTA BANNER ── */
+.cta-banner {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+  padding: 80px 5vw; text-align: center;
+}
+.cta-banner h2 { font-family: var(--font-head); font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800; color: #fff; margin-bottom: 14px; letter-spacing: -0.5px; }
+.cta-banner p { color: rgba(255,255,255,0.6); font-size: 1rem; margin-bottom: 32px; font-weight: 300; }
+.cta-banner .btn-primary { font-size: 1rem; padding: 15px 36px; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--navy); color: rgba(255,255,255,0.6);
+  padding: 60px 5vw 30px;
+}
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 50px; }
+.footer-brand .nav-logo { color: #fff; display: block; margin-bottom: 14px; }
+.footer-brand p { font-size: 0.88rem; line-height: 1.7; max-width: 280px; }
+footer h5 { font-family: var(--font-head); font-size: 0.88rem; font-weight: 700; color: #fff; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
+footer ul { list-style: none; }
+footer ul li { margin-bottom: 9px; }
+footer ul li a { font-size: 0.87rem; color: rgba(255,255,255,0.5); text-decoration: none; cursor: pointer; transition: var(--transition); }
+footer ul li a:hover { color: var(--teal-light); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: gap; gap: 12px; }
+.footer-bottom p { font-size: 0.82rem; }
+.footer-socials { display: flex; gap: 12px; }
+.social-btn {
+  width: 36px; height: 36px; border-radius: 9px; background: rgba(255,255,255,0.08);
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+  font-size: 0.9rem; transition: var(--transition); text-decoration: none; color: rgba(255,255,255,0.6);
+}
+.social-btn:hover { background: var(--teal); color: #fff; }
+
+/* ── BLOG ── */
+.blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 28px; margin-top: 56px; }
+.blog-card { border-radius: var(--radius); overflow: hidden; border: 1px solid #e4eaf2; transition: var(--transition); background: #fff; }
+.blog-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-5px); }
+.blog-thumb { height: 200px; overflow: hidden; }
+.blog-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.blog-card:hover .blog-thumb img { transform: scale(1.05); }
+.blog-content { padding: 24px; }
+.blog-meta { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; }
+.blog-tag { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--teal); background: rgba(14,139,120,0.1); padding: 3px 10px; border-radius: 50px; }
+.blog-date { font-size: 0.78rem; color: var(--gray); }
+.blog-card h3 { font-family: var(--font-head); font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; line-height: 1.3; }
+.blog-card p { font-size: 0.87rem; color: var(--gray); line-height: 1.6; }
+.read-more { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: 0.85rem; font-weight: 600; color: var(--teal); cursor: pointer; }
+.read-more:hover { gap: 10px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .about-grid, .contact-grid { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .process-step:not(:last-child)::after { display: none; }
+  .form-row { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .nav-links a:not(.nav-cta) { display: none; }
+  .footer-grid { grid-template-columns: 1fr; }
+}
+
+/* ── SCROLL TO TOP ── */
+#scrollTop {
+  position: fixed; bottom: 30px; right: 30px; z-index: 99;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--teal); color: #fff; border: none; cursor: pointer;
+  font-size: 1.1rem; display: none; align-items: center; justify-content: center;
+  box-shadow: 0 6px 20px rgba(14,139,120,0.4); transition: var(--transition);
+}
+#scrollTop:hover { transform: translateY(-3px); }
 </style>
 </head>
 <body>
 
-<div id="cursor"></div>
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-logo" onclick="showPage('home')">Atlas<span>.</span>Digital</div>
+  <div class="nav-links">
+    <a onclick="showPage('home')" class="active" id="nav-home">Accueil</a>
+    <a onclick="showPage('services')" id="nav-services">Services</a>
+    <a onclick="showPage('portfolio')" id="nav-portfolio">Portfolio</a>
+    <a onclick="showPage('about')" id="nav-about">À propos</a>
+    <a onclick="showPage('blog')" id="nav-blog">Blog</a>
+    <a onclick="showPage('contact')" class="nav-cta" id="nav-contact">Demander un audit</a>
+  </div>
+</nav>
 
-<div class="container">
-  <header>
-    <div class="logo">Atlas<span>.d</span></div>
-    <div style="font-size: 0.7rem; letter-spacing: 0.2em;">CASABLANCA / 2026</div>
-  </header>
+<!-- ══════════ PAGE HOME ══════════ -->
+<div id="page-home" class="page active">
 
-  <section class="hero">
-    <h1 class="reveal">Architectes de la <br><span class="accent">croissance</span> numérique.</h1>
-    <div class="hero-meta reveal">
-      <span>Performance & Data Engineering</span>
-      <span>Scroll pour approfondir</span>
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Agence de Marketing Digital · Maroc</div>
+      <h1>Propulsez votre PME dans <em>l'ère digitale</em></h1>
+      <p>Atlas Digital conçoit des stratégies marketing mesurables, créatives et orientées résultats — spécialement pour les PME marocaines ambitieuses.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('contact')">Demander un audit gratuit</button>
+        <button class="btn-outline" onclick="showPage('portfolio')">Voir nos réalisations →</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item"><h3>50<span>+</span></h3><p>Clients PME</p></div>
+        <div class="stat-item"><h3>×3.5<span></span></h3><p>ROAS moyen</p></div>
+        <div class="stat-item"><h3>712<span>%</span></h3><p>Croissance trafic</p></div>
+        <div class="stat-item"><h3>98<span>%</span></h3><p>Satisfaction client</p></div>
+      </div>
     </div>
-  </section>
+  </div>
 
-  <section class="section-grid">
-    <div class="label">Le Manifeste</div>
-    <div class="desc reveal">
-      Nous ne faisons pas de "marketing". Nous construisons des systèmes d'acquisition où chaque dirham investi est une donnée qui travaille pour votre bilan. L'élégance est dans la précision du résultat.
-    </div>
-  </section>
-
+  <!-- Services preview -->
   <section>
-    <div class="label">Expertises</div>
-    <div class="service-row">
-      <div class="service-title">Data Architecture</div>
-      <div style="width: 300px; color: var(--slate);">Tracking server-side et intégrité des données propriétaires.</div>
+    <span class="section-label">Ce que nous faisons</span>
+    <h2 class="section-title">Un arsenal digital<br>complet pour croître</h2>
+    <p class="section-sub">Du référencement naturel à la publicité en ligne, nous activons les bons leviers pour vos objectifs.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🔍</div>
+        <h3>SEO & Référencement</h3>
+        <p>Audit technique, mots-clés longue traîne, contenus evergreen et netlinking progressif pour une visibilité durable.</p>
+        <span class="service-tag">Résultats long terme</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🎯</div>
+        <h3>SEA & Google Ads</h3>
+        <p>Campagnes Google Ads optimisées via Smart Bidding et audiences personnalisées pour maximiser votre ROI dès le lancement.</p>
+        <span class="service-tag">Résultats immédiats</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📱</div>
+        <h3>Social Media</h3>
+        <p>Stratégie LinkedIn B2B et Instagram, storytelling de marque, gestion de communauté et campagnes sponsorisées.</p>
+        <span class="service-tag">Notoriété & Leads</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">✉️</div>
+        <h3>Email Marketing</h3>
+        <p>Séquences d'onboarding, relances automatisées, newsletters mensuelles et segmentation avancée de vos bases.</p>
+        <span class="service-tag">Fidélisation</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">✍️</div>
+        <h3>Content Marketing</h3>
+        <p>Articles de blog, guides téléchargeables, études de cas et contenus qui positionnent votre marque comme référence.</p>
+        <span class="service-tag">Autorité</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📊</div>
+        <h3>Audit CRO</h3>
+        <p>Analyse UX, tests A/B, optimisation des landing pages et formulaires pour transformer plus de visiteurs en clients.</p>
+        <span class="service-tag">+59% conversions</span>
+      </div>
     </div>
-    <div class="service-row">
-      <div class="service-title">Paid Media Monolithique</div>
-      <div style="width: 300px; color: var(--slate);">Stratégies d'enchères basées sur des modèles prédictifs.</div>
+  </section>
+
+  <!-- Why us -->
+  <section class="why-section">
+    <span class="section-label" style="color:var(--teal-light)">Pourquoi Atlas Digital</span>
+    <h2 class="section-title">Ce qui nous différencie</h2>
+    <p class="section-sub">Nous ne sommes pas une agence comme les autres. Nous sommes vos partenaires de croissance.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-num">01</div>
+        <h4>Résultats mesurables</h4>
+        <p>Chaque action est tracée, chaque euro dépensé est justifié. Reporting Looker Studio envoyé chaque lundi.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-num">02</div>
+        <h4>Taillé pour les PME</h4>
+        <p>Tarifs accessibles, agilité maximale. Nous comprenons les contraintes des petites structures marocaines.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-num">03</div>
+        <h4>Expertise locale</h4>
+        <p>Connaissance profonde du marché marocain, des comportements d'achat locaux et des canaux les plus efficaces.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-num">04</div>
+        <h4>Accompagnement humain</h4>
+        <p>Un interlocuteur dédié, disponible et impliqué dans votre réussite — pas un ticket support impersonnel.</p>
+      </div>
     </div>
-    <div class="service-row">
-      <div class="service-title">UX de Conversion</div>
-      <div style="width: 300px; color: var(--slate);">Interfaces épurées, conçues pour réduire la friction cognitive.</div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials-section">
+    <span class="section-label">Témoignages</span>
+    <h2 class="section-title">Ce que disent nos clients</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>« Atlas Digital a transformé notre présence en ligne en moins de 4 mois. Notre trafic a été multiplié par 6 et nous avons décroché 12 nouveaux contrats grâce à leurs campagnes Google Ads. »</blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar"><img src="https://i.pravatar.cc/150?img=11" alt="Karim B."></div>
+          <div class="author-info"><h5>Karim Benali</h5><span>Directeur — Mobilia Déco, Casablanca</span></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>« Leur approche SEO est vraiment différente. Ils ont compris notre secteur très rapidement et produit des contenus qui nous positionnent maintenant en première page sur nos requêtes clés. »</blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar"><img src="https://i.pravatar.cc/150?img=5" alt="Sara M."></div>
+          <div class="author-info"><h5>Sara Moussaoui</h5><span>Fondatrice — LegalStart Maroc, Rabat</span></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★☆</div>
+        <blockquote>« Le reporting hebdomadaire est une vraie valeur ajoutée. Je sais exactement où va mon budget et quels sont les résultats. Une transparence rare dans ce secteur. »</blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar"><img src="https://i.pravatar.cc/150?img=32" alt="Youssef A."></div>
+          <div class="author-info"><h5>Youssef Amrani</h5><span>CEO — TechHub Solutions, Marrakech</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-banner">
+    <h2>Prêt à propulser votre PME dans le digital ?</h2>
+    <p>Obtenez votre audit gratuit en 48h — sans engagement.</p>
+    <button class="btn-primary" onclick="showPage('contact')">Demander mon audit gratuit →</button>
+  </div>
+
+</div>
+
+<!-- ══════════ PAGE SERVICES ══════════ -->
+<div id="page-services" class="page">
+
+  <section style="padding-top:120px">
+    <span class="section-label">Nos prestations</span>
+    <h2 class="section-title">Des services pensés<br>pour votre croissance</h2>
+    <p class="section-sub">Chaque levier est activé au bon moment, avec les bons outils et un suivi transparent.</p>
+  </section>
+
+  <section style="padding-top: 0">
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🔍</div>
+        <h3>SEO & Référencement Naturel</h3>
+        <p>Audit technique complet, stratégie de mots-clés longue traîne, optimisation on-page, création d'un blog d'autorité avec 2 articles/semaine et campagne de netlinking progressif.</p>
+        <span class="service-tag">Priorité Haute · Mois 1–3</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🎯</div>
+        <h3>SEA · Google Ads</h3>
+        <p>Création et gestion de campagnes Search, Display et Shopping. Stratégie tCPA, Smart Bidding, audiences personnalisées et remarketing pour maximiser le ROI avec un budget maîtrisé.</p>
+        <span class="service-tag">Priorité Haute · Mois 2–4</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📱</div>
+        <h3>Social Media Marketing</h3>
+        <p>Stratégie LinkedIn B2B pour toucher les décideurs, Instagram pour les visuels et cas clients. Gestion de communauté, création de contenus et campagnes sponsorisées ciblées.</p>
+        <span class="service-tag">Priorité Moyenne · Mois 1–6</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">✉️</div>
+        <h3>Email Marketing & Automation</h3>
+        <p>Mise en place de séquences onboarding, relances intelligentes et newsletter mensuelle. Lead magnet (guide gratuit) pour constituer une base qualifiée et segmentation avancée.</p>
+        <span class="service-tag">Priorité Moyenne · Mois 3–6</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">✍️</div>
+        <h3>Content Marketing</h3>
+        <p>Articles de blog optimisés SEO, guides téléchargeables, études de cas clients, infographies et contenus longue traîne qui positionnent votre marque comme une référence.</p>
+        <span class="service-tag">Evergreen</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📊</div>
+        <h3>Audit CRO & Tests A/B</h3>
+        <p>Analyse du taux de conversion, identification des points de friction UX, tests A/B sur les CTAs et landing pages. Optimisation continue toutes les 90 jours.</p>
+        <span class="service-tag">+59% conversions prouvées</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📈</div>
+        <h3>Reporting & Analytics</h3>
+        <p>Tableau de bord personnalisé sur Looker Studio, envoi automatique chaque lundi matin. Suivi des KPIs clés : trafic, CAC, ROI, leads et taux de conversion.</p>
+        <span class="service-tag">Transparence totale</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🤝</div>
+        <h3>Affiliation & Influence</h3>
+        <p>Recrutement et gestion de partenaires influenceurs dès le 6e mois. Programme d'affiliation sur mesure pour amplifier votre portée avec un coût à la performance.</p>
+        <span class="service-tag">Phase 3 · Mois 6+</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🌐</div>
+        <h3>Création de Site Web</h3>
+        <p>Conception de sites vitrine et e-commerce performants, optimisés SEO dès la structure, rapides et adaptés au mobile. Architecture pensée pour la conversion.</p>
+        <span class="service-tag">Optionnel</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="process-section">
+    <span class="section-label">Notre méthode</span>
+    <h2 class="section-title">Comment on travaille</h2>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <h4>Audit & Diagnostic</h4>
+        <p>Analyse complète de votre présence digitale, de vos concurrents et de vos opportunités.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <h4>Stratégie personnalisée</h4>
+        <p>Un plan sur 12 mois avec les leviers prioritaires, les KPIs cibles et le budget recommandé.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <h4>Déploiement</h4>
+        <p>Exécution rigoureuse phase par phase, avec des points hebdomadaires et des ajustements en temps réel.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <h4>Optimisation continue</h4>
+        <p>Tests A/B, analyse des données et optimisations mensuelles pour maximiser chaque euro investi.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">05</div>
+        <h4>Reporting transparent</h4>
+        <p>Dashboard Looker Studio envoyé chaque lundi. Vous voyez tout, en temps réel.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section>
+    <span class="section-label">Tarifs</span>
+    <h2 class="section-title">Des offres adaptées<br>à chaque ambition</h2>
+    <p class="section-sub">Pas de frais cachés. Des engagements clairs et un ROI mesurable dès le premier mois.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <h3>Starter</h3>
+        <p class="plan-desc">Pour les PME qui démarrent leur présence digitale</p>
+        <div class="price-amount">2 500 <span>DH</span></div>
+        <p class="price-period">/ mois · engagement 3 mois</p>
+        <ul class="price-features">
+          <li>Audit SEO initial</li>
+          <li>2 articles de blog / mois</li>
+          <li>Gestion 1 réseau social</li>
+          <li>Rapport mensuel</li>
+          <li>Support email</li>
+        </ul>
+        <button class="price-btn" onclick="showPage('contact')">Commencer</button>
+      </div>
+      <div class="price-card featured">
+        <span class="popular-badge">Populaire</span>
+        <h3>Growth</h3>
+        <p class="plan-desc">Pour accélérer l'acquisition et la conversion</p>
+        <div class="price-amount">5 500 <span>DH</span></div>
+        <p class="price-period">/ mois · engagement 6 mois</p>
+        <ul class="price-features">
+          <li>SEO + SEA complet</li>
+          <li>4 articles de blog / mois</li>
+          <li>Gestion 3 réseaux sociaux</li>
+          <li>Email marketing automation</li>
+          <li>Tests A/B CRO mensuels</li>
+          <li>Rapport hebdomadaire Looker</li>
+          <li>Call mensuel stratégique</li>
+        </ul>
+        <button class="price-btn" onclick="showPage('contact')">Demander un devis</button>
+      </div>
+      <div class="price-card">
+        <h3>Scale</h3>
+        <p class="plan-desc">Pour les structures prêtes à dominer leur marché</p>
+        <div class="price-amount">9 500 <span>DH</span></div>
+        <p class="price-period">/ mois · sur mesure</p>
+        <ul class="price-features">
+          <li>Tout Growth +</li>
+          <li>Programme d'affiliation</li>
+          <li>Stratégie influence</li>
+          <li>Création de contenu vidéo</li>
+          <li>Account manager dédié</li>
+          <li>Reporting temps réel</li>
+          <li>Accès direct à l'équipe</li>
+        </ul>
+        <button class="price-btn" onclick="showPage('contact')">Nous contacter</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-banner">
+    <h2>Pas sûr de quelle offre vous convient ?</h2>
+    <p>Obtenez un audit gratuit et on vous recommande le plan idéal pour votre situation.</p>
+    <button class="btn-primary" onclick="showPage('contact')">Audit gratuit en 48h →</button>
+  </div>
+</div>
+
+<!-- ══════════ PAGE PORTFOLIO ══════════ -->
+<div id="page-portfolio" class="page">
+  <section style="padding-top:120px">
+    <span class="section-label">Nos réalisations</span>
+    <h2 class="section-title">Portfolio de projets</h2>
+    <p class="section-sub">Des résultats concrets, des histoires vraies. Voici quelques-uns des projets dont nous sommes le plus fiers.</p>
+    <div class="portfolio-filters">
+      <button class="filter-btn active" onclick="filterPortfolio('all', this)">Tous</button>
+      <button class="filter-btn" onclick="filterPortfolio('seo', this)">SEO</button>
+      <button class="filter-btn" onclick="filterPortfolio('sea', this)">SEA</button>
+      <button class="filter-btn" onclick="filterPortfolio('social', this)">Social Media</button>
+      <button class="filter-btn" onclick="filterPortfolio('cro', this)">CRO</button>
+      <button class="filter-btn" onclick="filterPortfolio('full', this)">Full Digital</button>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="portfolio-grid" id="portfolioGrid">
+
+      <div class="project-card" data-cat="seo full">
+        <div class="project-thumb">
+          <img src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=600&q=80" alt="Mobilia Déco">
+          <div class="project-overlay"><span class="overlay-tag">SEO + Content</span></div>
+        </div>
+        <div class="project-info">
+          <div class="project-cat">SEO & Content Marketing</div>
+          <h3>Mobilia Déco — Visibilité Organique</h3>
+          <p>Refonte complète de la stratégie SEO d'un e-commerçant de décoration intérieure à Casablanca. Blog d'autorité, mots-clés longue traîne et netlinking ciblé.</p>
+          <div class="project-result">
+            <div class="result-stat"><strong>+840%</strong><span>Trafic organique</span></div>
+            <div class="result-stat"><strong>32</strong><span>Mots-clés Top 3</span></div>
+            <div class="result-stat"><strong>6 mois</strong><span>Durée</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card" data-cat="sea full">
+        <div class="project-thumb">
+          <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=600&q=80" alt="LegalStart">
+          <div class="project-overlay"><span class="overlay-tag">Google Ads</span></div>
+        </div>
+        <div class="project-info">
+          <div class="project-cat">SEA · Google Ads</div>
+          <h3>LegalStart Maroc — Acquisition B2B</h3>
+          <p>Création et gestion de campagnes Google Ads pour un cabinet juridique en ligne. Ciblage PME, Smart Bidding et audiences remarketing sur un budget serré.</p>
+          <div class="project-result">
+            <div class="result-stat"><strong>×4.2</strong><span>ROAS</span></div>
+            <div class="result-stat"><strong>280 DH</strong><span>CAC moyen</span></div>
+            <div class="result-stat"><strong>3 mois</strong><span>Durée</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card" data-cat="social full">
+        <div class="project-thumb">
+          <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&q=80" alt="NutriBox">
+          <div class="project-overlay"><span class="overlay-tag">Instagram & LinkedIn</span></div>
+        </div>
+        <div class="project-info">
+          <div class="project-cat">Social Media Marketing</div>
+          <h3>NutriBox — Lancement de marque</h3>
+          <p>Stratégie social media complète pour le lancement d'une startup de nutrition saine à livraison. Création de contenu, storytelling et campagnes influenceurs.</p>
+          <div class="project-result">
+            <div class="result-stat"><strong>18K</strong><span>Abonnés M6</span></div>
+            <div class="result-stat"><strong>7.8%</strong><span>Taux engagement</span></div>
+            <div class="result-stat"><strong>5 mois</strong><span>Durée</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card" data-cat="cro full">
+        <div class="project-thumb">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80" alt="TechHub">
+          <div class="project-overlay"><span class="overlay-tag">CRO & A/B Tests</span></div>
+        </div>
+        <div class="project-info">
+          <div class="project-cat">Audit CRO & Tests A/B</div>
+          <h3>TechHub Solutions — Optimisation conversion</h3>
+          <p>Audit UX complet, refonte des landing pages et séries de tests A/B sur les formulaires de contact et les CTAs d'une plateforme SaaS B2B marocaine.</p>
+          <div class="project-result">
+            <div class="result-stat"><strong>+71%</strong><span>Taux conversion</span></div>
+            <div class="result-stat"><strong>−38%</strong><span>Bounce rate</span></div>
+            <div class="result-stat"><strong>90 jours</strong><span>Durée</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card" data-cat="seo sea full">
+        <div class="project-thumb">
+          <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&q=80" alt="ZestFood">
+          <div class="project-overlay"><span class="overlay-tag">SEO + SEA + Email</span></div>
+        </div>
+        <div class="project-info">
+          <div class="project-cat">Full Digital — Restauration</div>
+          <h3>ZestFood — Présence digitale 360°</h3>
+          <p>Refonte complète de la présence digitale d'une chaîne de restauration rapide marocaine. SEO local, Google Ads, email marketing et gestion des avis clients.</p>
+          <div class="project-result">
+            <div class="result-stat"><strong>+320%</strong><span>Commandes en ligne</span></div>
+            <div class="result-stat"><strong>4.8★</strong><span>Note Google</span></div>
+            <div class="result-stat"><strong>8 mois</strong><span>Durée</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card" data-cat="social sea">
+        <div class="project-thumb">
+          <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&q=80" alt="Zara Boutique">
+          <div class="project-overlay"><span class="overlay-tag">Social Ads</span></div>
+        </div>
+        <div class="project-info">
+          <div class="project-cat">Social Ads · Mode & Lifestyle</div>
+          <h3>Zarifa Boutique — Campagnes Meta Ads</h3>
+          <p>Stratégie Meta Ads (Facebook & Instagram) pour une boutique de prêt-à-porter marocaine. Catalogue dynamique, campagnes retargeting et look-alike audiences.</p>
+          <div class="project-result">
+            <div class="result-stat"><strong>×3.8</strong><span>ROAS</span></div>
+            <div class="result-stat"><strong>+260%</strong><span>Ventes en ligne</span></div>
+            <div class="result-stat"><strong>4 mois</strong><span>Durée</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card" data-cat="seo full">
+        <div class="project-thumb">
+          <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&q=80" alt="Immo360">
+          <div class="project-overlay"><span class="overlay-tag">SEO Local</span></div>
+        </div>
+        <div class="project-info">
+          <div class="project-cat">SEO Local · Immobilier</div>
+          <h3>Immo360 — Référencement local Marrakech</h3>
+          <p>Stratégie SEO local pour une agence immobilière de Marrakech. Optimisation Google My Business, pages localisées et contenu hyper-ciblé par quartier.</p>
+          <div class="project-result">
+            <div class="result-stat"><strong>#1</strong><span>Google local</span></div>
+            <div class="result-stat"><strong>+490%</strong><span>Appels entrants</span></div>
+            <div class="result-stat"><strong>4 mois</strong><span>Durée</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card" data-cat="social full">
+        <div class="project-thumb">
+          <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&q=80" alt="EduBoost">
+          <div class="project-overlay"><span class="overlay-tag">LinkedIn B2B</span></div>
+        </div>
+        <div class="project-info">
+          <div class="project-cat">LinkedIn B2B · Formation</div>
+          <h3>EduBoost — Génération de leads B2B</h3>
+          <p>Stratégie LinkedIn complète pour une plateforme de formation professionnelle. Thought leadership, LinkedIn Ads et séquences de prospection automatisées.</p>
+          <div class="project-result">
+            <div class="result-stat"><strong>142</strong><span>Leads qualifiés/mois</span></div>
+            <div class="result-stat"><strong>×2.9</strong><span>ROI</span></div>
+            <div class="result-stat"><strong>5 mois</strong><span>Durée</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="cta-banner">
+    <h2>Votre projet sera le prochain cas de succès</h2>
+    <p>Discutons de vos objectifs et construisons votre stratégie ensemble.</p>
+    <button class="btn-primary" onclick="showPage('contact')">Démarrer mon projet →</button>
+  </div>
+</div>
+
+<!-- ══════════ PAGE ABOUT ══════════ -->
+<div id="page-about" class="page">
+  <section style="padding-top:120px">
+    <div class="about-grid">
+      <div class="about-img-wrap">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80" alt="L'équipe Atlas Digital">
+        <div class="about-badge">
+          <strong>2025</strong>
+          <span>Fondée à Casablanca</span>
+        </div>
+      </div>
+      <div class="about-content">
+        <span class="section-label">Notre histoire</span>
+        <h2 class="section-title">Des étudiants passionnés, une mission claire</h2>
+        <p>Atlas Digital est née d'un constat simple : les PME marocaines méritent des stratégies marketing de qualité professionnelle, à des tarifs adaptés à leurs réalités. Fondée par des étudiants en marketing digital de l'IGA, notre agence allie rigueur académique et pragmatisme terrain.</p>
+        <p>Notre nom rend hommage aux montagnes de l'Atlas — symboles de solidité, d'élévation et d'ancrage marocain. Cette identité forte nous rappelle chaque jour pourquoi nous faisons ce métier : propulser les entrepreneurs marocains ambitieux vers de nouveaux sommets.</p>
+        <p>En moins d'un an, nous avons accompagné plus de 50 PME dans leur transformation digitale, avec un taux de satisfaction client de 98 % et un NPS de 78. Pas par hasard, mais grâce à une culture du résultat et de la transparence absolue.</p>
+        <div class="values-list">
+          <span class="value-tag">🎯 Orientation résultats</span>
+          <span class="value-tag">🔍 Transparence totale</span>
+          <span class="value-tag">🤝 Partenariat long terme</span>
+          <span class="value-tag">⚡ Agilité</span>
+          <span class="value-tag">🇲🇦 Expertise locale</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section>
+    <span class="section-label">L'équipe</span>
+    <h2 class="section-title">Ceux qui font la magie</h2>
+    <p class="section-sub">Une équipe jeune, passionnée et certifiée Google, Meta et HubSpot.</p>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-photo"><img src="https://i.pravatar.cc/300?img=67" alt="Ayoub Benkaid"></div>
+        <h4>Ayoub Benkaid</h4>
+        <span class="role">Fondateur & Directeur Stratégie</span>
+        <p class="bio">Expert en stratégie digitale et SEO. Certifié Google Analytics et HubSpot.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-photo"><img src="https://i.pravatar.cc/300?img=47" alt="Imane Fassi"></div>
+        <h4>Imane Fassi</h4>
+        <span class="role">Responsable SEA & Performance</span>
+        <p class="bio">Spécialiste Google Ads et Meta Ads. Passionnée par l'optimisation des campagnes payantes.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-photo"><img src="https://i.pravatar.cc/300?img=25" alt="Omar Kettani"></div>
+        <h4>Omar Kettani</h4>
+        <span class="role">Responsable Content & SEO</span>
+        <p class="bio">Rédacteur et stratège SEO. Produit des contenus qui ranquent et convertissent.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-photo"><img src="https://i.pravatar.cc/300?img=9" alt="Salma Idrissi"></div>
+        <h4>Salma Idrissi</h4>
+        <span class="role">Social Media & Community Manager</span>
+        <p class="bio">Experte LinkedIn et Instagram. Crée des communautés engagées et des campagnes virales.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission Values -->
+  <section class="why-section">
+    <span class="section-label" style="color:var(--teal-light)">Notre vision</span>
+    <h2 class="section-title">Devenir l'agence de référence<br>des PME marocaines d'ici 2028</h2>
+    <p class="section-sub">Pas une agence parmi d'autres. Le partenaire de croissance que chaque PME mérite.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-num">📍</div>
+        <h4>Mission</h4>
+        <p>Propulser les PME marocaines dans l'ère du digital grâce à des stratégies marketing mesurables, créatives et orientées résultats.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-num">🚀</div>
+        <h4>Vision 2028</h4>
+        <p>Devenir l'agence de marketing digital de référence pour les PME du Maroc, reconnue pour sa rigueur, son innovation et son impact économique réel.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-num">💎</div>
+        <h4>Valeurs</h4>
+        <p>Transparence dans chaque euro dépensé, excellence dans chaque livrable, et engagement sincère envers la réussite de nos clients.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-num">🌍</div>
+        <h4>Impact</h4>
+        <p>Chaque PME que nous aidons à croître crée des emplois et contribue à l'économie marocaine. Notre mission dépasse le marketing.</p>
+      </div>
     </div>
   </section>
 </div>
 
-<script>
-  const cursor = document.getElementById('cursor');
-  document.addEventListener('mousemove', (e) => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-  });
+<!-- ══════════ PAGE BLOG ══════════ -->
+<div id="page-blog" class="page">
+  <section style="padding-top:120px">
+    <span class="section-label">Le blog Atlas Digital</span>
+    <h2 class="section-title">Conseils, tendances<br>et stratégies digitales</h2>
+    <p class="section-sub">Des articles actionables pour vous aider à tirer le meilleur du marketing digital — rédigés par nos experts.</p>
+  </section>
+  <section style="padding-top:0">
+    <div class="blog-grid">
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('active'); });
+      <div class="blog-card">
+        <div class="blog-thumb"><img src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=600&q=80" alt="SEO 2025"></div>
+        <div class="blog-content">
+          <div class="blog-meta"><span class="blog-tag">SEO</span><span class="blog-date">12 Mai 2026</span></div>
+          <h3>SEO au Maroc en 2026 : les 7 tendances que votre PME ne peut pas ignorer</h3>
+          <p>De l'IA générative aux recherches vocales, le SEO évolue rapidement. Voici comment adapter votre stratégie au marché marocain cette année.</p>
+          <span class="read-more">Lire l'article →</span>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-thumb"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80" alt="Google Ads PME"></div>
+        <div class="blog-content">
+          <div class="blog-meta"><span class="blog-tag">SEA</span><span class="blog-date">5 Mai 2026</span></div>
+          <h3>Google Ads avec un petit budget : notre guide pratique pour les PME marocaines</h3>
+          <p>Pas besoin de 50 000 DH/mois pour performer sur Google Ads. Voici comment maximiser votre retour avec un budget serré.</p>
+          <span class="read-more">Lire l'article →</span>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-thumb"><img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=600&q=80" alt="LinkedIn B2B"></div>
+        <div class="blog-content">
+          <div class="blog-meta"><span class="blog-tag">Social Media</span><span class="blog-date">28 Avr. 2026</span></div>
+          <h3>LinkedIn pour les PME B2B : comment générer 50 leads qualifiés par mois</h3>
+          <p>LinkedIn est le réseau le plus sous-exploité par les PME marocaines. Voici notre méthode étape par étape pour changer ça.</p>
+          <span class="read-more">Lire l'article →</span>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-thumb"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&q=80" alt="Email Marketing"></div>
+        <div class="blog-content">
+          <div class="blog-meta"><span class="blog-tag">Email</span><span class="blog-date">20 Avr. 2026</span></div>
+          <h3>Email marketing : pourquoi c'est encore le canal avec le meilleur ROI en 2026</h3>
+          <p>Malgré les réseaux sociaux et l'IA, l'email reste roi. Découvrez comment construire une liste qualifiée et des séquences qui convertissent.</p>
+          <span class="read-more">Lire l'article →</span>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-thumb"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80" alt="CRO"></div>
+        <div class="blog-content">
+          <div class="blog-meta"><span class="blog-tag">CRO</span><span class="blog-date">10 Avr. 2026</span></div>
+          <h3>Tests A/B : comment nous avons augmenté les conversions de +59% avec un seul CTA</h3>
+          <p>Un changement de formulation sur un bouton. +59% de conversions. Voici ce que nous avons appris et comment vous pouvez le reproduire.</p>
+          <span class="read-more">Lire l'article →</span>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-thumb"><img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=600&q=80" alt="KPIs"></div>
+        <div class="blog-content">
+          <div class="blog-meta"><span class="blog-tag">Analytics</span><span class="blog-date">1 Avr. 2026</span></div>
+          <h3>Les 5 KPIs que chaque dirigeant de PME doit surveiller chaque semaine</h3>
+          <p>Arrêtez de vous noyer dans les données. Voici les 5 indicateurs qui comptent vraiment pour piloter votre croissance digitale.</p>
+          <span class="read-more">Lire l'article →</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- ══════════ PAGE CONTACT ══════════ -->
+<div id="page-contact" class="page">
+  <section style="padding-top:120px">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <span class="section-label">Nous contacter</span>
+        <h2>Demandez votre<br>audit gratuit</h2>
+        <p>En 48h, notre équipe analyse votre présence digitale et vous envoie un rapport personnalisé avec nos recommandations prioritaires — sans engagement.</p>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div><h5>Adresse</h5><p>Casablanca, Maroc<br>(consultations en ligne disponibles)</p></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div><h5>Email</h5><p>contact@atlasdigital.ma</p></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div><h5>Téléphone</h5><p>+212 6 XX XX XX XX</p></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🕐</div>
+          <div><h5>Disponibilité</h5><p>Lun–Ven · 9h–18h<br>Réponse sous 24h garantie</p></div>
+        </div>
+      </div>
+      <div class="contact-form" id="contactForm">
+        <h3 style="font-family:var(--font-head);font-size:1.3rem;font-weight:700;margin-bottom:24px;color:var(--navy)">Parlons de votre projet</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Prénom *</label>
+            <input type="text" placeholder="Mohammed">
+          </div>
+          <div class="form-group">
+            <label>Nom *</label>
+            <input type="text" placeholder="El Amrani">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email professionnel *</label>
+          <input type="email" placeholder="m.elamrani@votreentreprise.ma">
+        </div>
+        <div class="form-group">
+          <label>Entreprise</label>
+          <input type="text" placeholder="Nom de votre entreprise">
+        </div>
+        <div class="form-group">
+          <label>Service qui vous intéresse</label>
+          <select>
+            <option value="">-- Sélectionner --</option>
+            <option>SEO & Référencement naturel</option>
+            <option>SEA · Google Ads</option>
+            <option>Social Media Marketing</option>
+            <option>Email Marketing</option>
+            <option>Audit CRO</option>
+            <option>Stratégie Full Digital</option>
+            <option>Je ne sais pas encore</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Votre message</label>
+          <textarea placeholder="Décrivez votre projet, vos objectifs, votre budget estimé..."></textarea>
+        </div>
+        <button class="form-submit" onclick="submitForm()">Envoyer ma demande d'audit gratuit →</button>
+        <p style="font-size:0.78rem;color:var(--gray);margin-top:12px;text-align:center">Réponse garantie sous 48h · Aucun engagement</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Scroll Top -->
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="nav-logo">Atlas<span style="color:var(--teal-light)">.</span>Digital</span>
+      <p>Agence de marketing digital dédiée à propulser les PME marocaines dans l'ère du digital grâce à des stratégies mesurables et orientées résultats.</p>
+    </div>
+    <div>
+      <h5>Services</h5>
+      <ul>
+        <li><a onclick="showPage('services')">SEO & Référencement</a></li>
+        <li><a onclick="showPage('services')">SEA · Google Ads</a></li>
+        <li><a onclick="showPage('services')">Social Media</a></li>
+        <li><a onclick="showPage('services')">Email Marketing</a></li>
+        <li><a onclick="showPage('services')">Audit CRO</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Agence</h5>
+      <ul>
+        <li><a onclick="showPage('about')">À propos</a></li>
+        <li><a onclick="showPage('portfolio')">Portfolio</a></li>
+        <li><a onclick="showPage('blog')">Blog</a></li>
+        <li><a onclick="showPage('contact')">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Contact</h5>
+      <ul>
+        <li><a>Casablanca, Maroc</a></li>
+        <li><a>contact@atlasdigital.ma</a></li>
+        <li><a>+212 6 XX XX XX XX</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Atlas Digital. Tous droits réservés.</p>
+    <div class="footer-socials">
+      <a class="social-btn" title="LinkedIn">in</a>
+      <a class="social-btn" title="Instagram">ig</a>
+      <a class="social-btn" title="Facebook">fb</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── ROUTING ──
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const page = document.getElementById('page-' + name);
+  if (page) { page.classList.add('active'); }
+  const navEl = document.getElementById('nav-' + name);
+  if (navEl) navEl.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── PORTFOLIO FILTER ──
+function filterPortfolio(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#portfolioGrid .project-card').forEach(card => {
+    const cats = card.getAttribute('data-cat') || '';
+    card.style.display = (cat === 'all' || cats.includes(cat)) ? 'block' : 'none';
   });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+// ── FORM SUBMIT ──
+function submitForm() {
+  const form = document.getElementById('contactForm');
+  form.innerHTML = `
+    <div class="form-success" style="display:block">
+      <div style="font-size:3rem">✅</div>
+      <h3>Message envoyé !</h3>
+      <p style="color:var(--gray);font-size:0.95rem">Merci pour votre demande. Notre équipe vous contacte sous <strong>48h</strong> avec votre audit personnalisé.</p>
+      <button class="btn-primary" style="margin-top:20px" onclick="showPage('home')">Retour à l'accueil</button>
+    </div>
+  `;
+}
+
+// ── SCROLL TOP ──
+const scrollBtn = document.getElementById('scrollTop');
+window.addEventListener('scroll', () => {
+  scrollBtn.style.display = window.scrollY > 400 ? 'flex' : 'none';
+});
+
+// ── NAV SHADOW ON SCROLL ──
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('mainNav');
+  nav.style.boxShadow = window.scrollY > 10 ? '0 2px 30px rgba(13,27,42,0.10)' : 'none';
+});
 </script>
 </body>
 </html>
