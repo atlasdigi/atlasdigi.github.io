@@ -3,228 +3,1119 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>atlasdigital — Agence de marketing digital</title>
+<title>Atlas Digital — Agence de Marketing Digital</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-/* ─── RESET & BASE ─── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; }
-body {
-  background: #080808;
-  color: #f0ede6;
-  font-family: 'DM Sans', sans-serif;
-  line-height: 1.6;
-  overflow-x: hidden;
-  cursor: none;
-}
-a { color: inherit; text-decoration: none; }
-h1,h2,h3,h4,h5 { font-family: 'Syne', sans-serif; font-weight: 800; line-height: 1.05; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ─── CUSTOM CURSOR ─── */
-#cur { width:10px; height:10px; background:#c8f53a; border-radius:50%; position:fixed; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:transform .15s; }
-#cur-ring { width:40px; height:40px; border:1.5px solid rgba(200,245,58,.45); border-radius:50%; position:fixed; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .3s,height .3s,border-color .3s; }
-body:has(a:hover) #cur-ring, body:has(button:hover) #cur-ring { width:60px; height:60px; border-color:#c8f53a; }
+  :root {
+    --navy: #0B1E3E;
+    --navy2: #102952;
+    --navy3: #1A3A6B;
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --gold-pale: #F5E6B8;
+    --white: #FFFFFF;
+    --off-white: #F7F5EF;
+    --gray: #E4E0D5;
+    --muted: #8B8575;
+    --text: #2A2218;
+  }
 
-/* ─── NOISE ─── */
-body::after {
-  content:''; position:fixed; inset:0; pointer-events:none; z-index:9990;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  opacity:.028;
-}
+  html { scroll-behavior: smooth; }
 
-/* (CSS inchangé) */
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ── CUSTOM CURSOR ── */
+  .cursor {
+    position: fixed; top: 0; left: 0;
+    width: 10px; height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+    mix-blend-mode: multiply;
+  }
+  .cursor-ring {
+    position: fixed; top: 0; left: 0;
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.18s ease-out, width 0.3s, height 0.3s, opacity 0.3s;
+    opacity: 0.7;
+  }
+  .cursor.hover { width: 18px; height: 18px; }
+  .cursor-ring.hover { width: 56px; height: 56px; opacity: 0.4; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.4rem 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background 0.4s, backdrop-filter 0.4s, padding 0.3s;
+  }
+  nav.scrolled {
+    background: rgba(11, 30, 62, 0.96);
+    backdrop-filter: blur(16px);
+    padding: 1rem 5%;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 700;
+    color: var(--white); letter-spacing: 0.04em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: rgba(255,255,255,0.75); font-size: 0.82rem;
+    text-decoration: none; letter-spacing: 0.12em;
+    text-transform: uppercase; font-weight: 400;
+    position: relative; transition: color 0.2s;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px; background: var(--gold);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold) !important;
+    padding: 0.5rem 1.4rem;
+    font-size: 0.78rem !important;
+    letter-spacing: 0.14em !important;
+    transition: background 0.2s, color 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--gold) !important; color: var(--navy) !important; }
+  .nav-cta::after { display: none !important; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    background: var(--navy);
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding: 0 5%;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 80% 40%, rgba(26,58,107,0.6) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 50% at 20% 80%, rgba(201,168,76,0.08) 0%, transparent 60%);
+  }
+  /* Animated grain overlay */
+  .hero-bg::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4; pointer-events: none;
+  }
+  /* Decorative rings */
+  .ring {
+    position: absolute; border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.15);
+    pointer-events: none;
+  }
+  .ring-1 { width: 700px; height: 700px; right: -180px; top: -180px; }
+  .ring-2 { width: 480px; height: 480px; right: -60px; top: -60px; border-color: rgba(201,168,76,0.1); }
+  .ring-3 { width: 260px; height: 260px; right: 60px; top: 60px; border-color: rgba(201,168,76,0.2); }
+  .ring-4 { width: 140px; height: 140px; right: 130px; top: 130px; background: rgba(201,168,76,0.06); border: none; }
+
+  /* Gold vertical line */
+  .hero-line {
+    position: absolute; left: 5%; top: 0; bottom: 0;
+    width: 1px; background: linear-gradient(to bottom, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
+    opacity: 0.4;
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 700px;
+    animation: heroFadeIn 1.2s ease-out both;
+  }
+  @keyframes heroFadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    color: var(--gold); font-size: 0.75rem; letter-spacing: 0.2em;
+    text-transform: uppercase; margin-bottom: 2rem;
+    animation: heroFadeIn 1s 0.2s ease-out both;
+  }
+  .hero-tag::before {
+    content: ''; display: block; width: 30px; height: 1px; background: var(--gold);
+  }
+  .hero-h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 700; line-height: 0.95;
+    color: var(--white);
+    animation: heroFadeIn 1s 0.3s ease-out both;
+  }
+  .hero-h1 em {
+    font-style: italic; color: var(--gold);
+    display: block;
+  }
+  .hero-sub {
+    margin-top: 2rem; max-width: 480px;
+    font-size: 1rem; line-height: 1.7;
+    color: rgba(255,255,255,0.55); font-weight: 300;
+    animation: heroFadeIn 1s 0.5s ease-out both;
+  }
+  .hero-actions {
+    display: flex; gap: 1.2rem; margin-top: 2.8rem; flex-wrap: wrap;
+    animation: heroFadeIn 1s 0.7s ease-out both;
+  }
+  .btn-primary {
+    background: var(--gold); color: var(--navy);
+    padding: 0.9rem 2.2rem; font-size: 0.82rem;
+    font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; border: none;
+    transition: background 0.25s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent; color: var(--white);
+    padding: 0.9rem 2.2rem; font-size: 0.82rem;
+    font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; border: 1px solid rgba(255,255,255,0.3);
+    display: inline-block; transition: border-color 0.25s, color 0.25s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 5%;
+    display: flex; align-items: center; gap: 0.8rem;
+    color: rgba(255,255,255,0.35); font-size: 0.72rem; letter-spacing: 0.16em;
+    text-transform: uppercase;
+    animation: heroFadeIn 1s 1.2s ease-out both;
+  }
+  .scroll-line {
+    width: 40px; height: 1px; background: rgba(255,255,255,0.25);
+    position: relative; overflow: hidden;
+  }
+  .scroll-line::after {
+    content: ''; position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%; background: var(--gold);
+    animation: scrollAnim 2s 1.5s ease-in-out infinite;
+  }
+  @keyframes scrollAnim {
+    0% { left: -100%; } 50% { left: 100%; } 100% { left: 100%; }
+  }
+
+  /* Hero stats */
+  .hero-stats {
+    position: absolute; right: 5%; bottom: 3rem;
+    display: flex; flex-direction: column; gap: 1.5rem;
+    animation: heroFadeIn 1s 0.9s ease-out both;
+    z-index: 2;
+  }
+  .hero-stat { text-align: right; }
+  .hero-stat-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; font-weight: 600; color: var(--gold);
+    line-height: 1;
+  }
+  .hero-stat-label {
+    font-size: 0.7rem; color: rgba(255,255,255,0.35);
+    letter-spacing: 0.12em; text-transform: uppercase; margin-top: 0.2rem;
+  }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 7rem 5%; }
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    color: var(--gold); font-size: 0.72rem; letter-spacing: 0.2em;
+    text-transform: uppercase; margin-bottom: 1.2rem;
+  }
+  .section-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--gold); }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 600; line-height: 1.1; color: var(--navy);
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .gold-rule { width: 60px; height: 1px; background: var(--gold); margin: 1.5rem 0; }
+
+  /* ── ABOUT ── */
+  #about {
+    background: var(--off-white);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;
+  }
+  .about-visual {
+    position: relative; height: 500px;
+  }
+  .about-card {
+    position: absolute;
+    background: var(--navy); padding: 2.5rem;
+    border-top: 2px solid var(--gold);
+  }
+  .about-card-main {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy3) 100%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 2.5rem;
+    overflow: hidden;
+  }
+  .about-card-main::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 300px; height: 300px; border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.2);
+  }
+  .about-card-main::after {
+    content: '';
+    position: absolute; top: 0; right: 0;
+    width: 120px; height: 120px; border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.15);
+  }
+  .about-big-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 8rem; font-weight: 700;
+    color: rgba(201,168,76,0.15); line-height: 1;
+    position: absolute; top: 1rem; left: 1.5rem;
+    pointer-events: none;
+  }
+  .about-card-label {
+    font-size: 0.72rem; color: var(--gold); letter-spacing: 0.16em;
+    text-transform: uppercase; margin-bottom: 0.6rem;
+  }
+  .about-card-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; color: var(--white); line-height: 1.3; font-weight: 300; font-style: italic;
+  }
+  .about-float {
+    position: absolute; bottom: -20px; right: -20px;
+    width: 180px;
+    background: var(--gold); padding: 1.8rem; z-index: 2;
+  }
+  .about-float-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem; font-weight: 700; color: var(--navy); line-height: 1;
+  }
+  .about-float-text {
+    font-size: 0.72rem; color: var(--navy); opacity: 0.7;
+    letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.4rem;
+  }
+
+  .about-text p {
+    font-size: 0.95rem; line-height: 1.8; color: var(--muted);
+    font-weight: 300; margin-bottom: 1rem;
+  }
+  .about-pillars {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem;
+  }
+  .pillar {
+    padding: 1.4rem; border: 1px solid var(--gray);
+    position: relative; overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .pillar::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 3px; height: 0; background: var(--gold);
+    transition: height 0.3s;
+  }
+  .pillar:hover { border-color: var(--gold); transform: translateY(-3px); }
+  .pillar:hover::before { height: 100%; }
+  .pillar-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-weight: 600; color: var(--navy); margin-bottom: 0.3rem;
+  }
+  .pillar-text { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+  /* ── SERVICES ── */
+  #services {
+    background: var(--navy);
+    position: relative; overflow: hidden;
+  }
+  #services::before {
+    content: '';
+    position: absolute; top: -200px; right: -200px;
+    width: 600px; height: 600px; border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.08);
+    pointer-events: none;
+  }
+  .services-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 4rem; flex-wrap: wrap; gap: 2rem;
+  }
+  .services-header .section-title { color: var(--white); }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px;
+    background: rgba(201,168,76,0.12);
+  }
+  .service-card {
+    background: var(--navy); padding: 2.8rem 2.2rem;
+    position: relative; overflow: hidden;
+    transition: background 0.4s;
+    cursor: none;
+  }
+  .service-card::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--navy3) 0%, var(--navy) 100%);
+    opacity: 0; transition: opacity 0.4s;
+  }
+  .service-card:hover { background: var(--navy2); }
+  .service-card:hover::after { opacity: 1; }
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem; font-weight: 700;
+    color: rgba(201,168,76,0.1); line-height: 1;
+    margin-bottom: 1rem; transition: color 0.3s;
+  }
+  .service-card:hover .service-num { color: rgba(201,168,76,0.2); }
+  .service-icon {
+    width: 40px; height: 40px; margin-bottom: 1.4rem;
+    position: relative; z-index: 1;
+  }
+  .service-icon svg { width: 100%; height: 100%; }
+  .service-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem; font-weight: 600;
+    color: var(--white); margin-bottom: 0.8rem;
+    position: relative; z-index: 1; transition: color 0.3s;
+  }
+  .service-card:hover .service-title { color: var(--gold-light); }
+  .service-desc {
+    font-size: 0.85rem; line-height: 1.7;
+    color: rgba(255,255,255,0.4); font-weight: 300;
+    position: relative; z-index: 1;
+  }
+  .service-arrow {
+    position: absolute; bottom: 2rem; right: 2rem;
+    width: 36px; height: 36px; border: 1px solid rgba(201,168,76,0.2);
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.3s, border-color 0.3s, transform 0.3s;
+    z-index: 1;
+  }
+  .service-card:hover .service-arrow {
+    background: var(--gold); border-color: var(--gold); transform: translate(2px, -2px);
+  }
+  .service-arrow svg { width: 14px; height: 14px; stroke: var(--gold); transition: stroke 0.3s; }
+  .service-card:hover .service-arrow svg { stroke: var(--navy); }
+
+  /* ── PROCESS ── */
+  #process { background: var(--off-white); }
+  .process-layout {
+    display: grid; grid-template-columns: 1fr 2fr; gap: 6rem; align-items: start; margin-top: 4rem;
+  }
+  .process-steps { display: flex; flex-direction: column; gap: 0; }
+  .process-step {
+    display: flex; gap: 1.5rem; padding: 1.8rem 0;
+    border-bottom: 1px solid var(--gray);
+    cursor: none; position: relative;
+    transition: padding-left 0.3s;
+  }
+  .process-step::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 0; background: var(--gold); transition: width 0.3s;
+  }
+  .process-step:hover { padding-left: 1rem; }
+  .process-step:hover::before { width: 2px; }
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem; color: var(--gold);
+    letter-spacing: 0.12em; min-width: 28px; margin-top: 0.2rem;
+  }
+  .step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-weight: 600; color: var(--navy);
+    margin-bottom: 0.3rem;
+  }
+  .step-text { font-size: 0.83rem; color: var(--muted); line-height: 1.6; }
+
+  .process-visual {
+    position: sticky; top: 7rem;
+    background: var(--navy); padding: 3.5rem;
+    border-top: 2px solid var(--gold); overflow: hidden;
+  }
+  .process-visual::before {
+    content: '';
+    position: absolute; bottom: -100px; right: -100px;
+    width: 350px; height: 350px; border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.1);
+  }
+  .kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: rgba(201,168,76,0.1); }
+  .kpi-box {
+    background: var(--navy2); padding: 2rem 1.5rem;
+    transition: background 0.3s;
+  }
+  .kpi-box:hover { background: var(--navy3); }
+  .kpi-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem; font-weight: 700;
+    color: var(--gold); line-height: 1;
+  }
+  .kpi-label {
+    font-size: 0.72rem; color: rgba(255,255,255,0.35);
+    letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.5rem;
+  }
+  .process-quote {
+    margin-top: 2.5rem; padding-top: 2rem;
+    border-top: 1px solid rgba(201,168,76,0.15);
+  }
+  .process-quote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-style: italic;
+    color: rgba(255,255,255,0.5); line-height: 1.6;
+  }
+  .process-quote span {
+    display: block; margin-top: 0.8rem;
+    font-size: 0.72rem; color: var(--gold); letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* ── RESULTS ── */
+  #results {
+    background: var(--navy);
+    position: relative; overflow: hidden;
+  }
+  .results-inner {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: rgba(201,168,76,0.1); margin-top: 4rem;
+  }
+  .result-item {
+    background: var(--navy); padding: 3.5rem 2.5rem;
+    position: relative; overflow: hidden;
+  }
+  .result-item::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 2px; background: var(--gold);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.5s;
+  }
+  .result-item:hover::before { transform: scaleX(1); }
+  .result-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4.5rem; font-weight: 700;
+    color: var(--gold); line-height: 1;
+  }
+  .result-label {
+    font-size: 0.82rem; color: rgba(255,255,255,0.45);
+    margin-top: 0.6rem; line-height: 1.5;
+  }
+  .result-bar {
+    width: 100%; height: 1px; background: rgba(201,168,76,0.15);
+    margin: 1.5rem 0; position: relative; overflow: hidden;
+  }
+  .result-bar-fill {
+    position: absolute; top: 0; left: 0; height: 100%;
+    background: var(--gold);
+    animation: barGrow 1.5s ease-out forwards;
+    animation-play-state: paused;
+  }
+  .result-bar-fill.animated { animation-play-state: running; }
+  @keyframes barGrow { from { width: 0; } }
+
+  /* ── TESTIMONIALS ── */
+  #testimonials { background: var(--off-white); }
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 4rem;
+  }
+  .testimonial-card {
+    background: var(--white); padding: 2.5rem;
+    border: 1px solid var(--gray);
+    position: relative; overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  }
+  .testimonial-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--gold);
+    box-shadow: 0 20px 60px rgba(11,30,62,0.08);
+  }
+  .testimonial-card::before {
+    content: '"';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 8rem; color: rgba(201,168,76,0.08);
+    position: absolute; top: -1rem; left: 1rem; line-height: 1;
+    pointer-events: none;
+  }
+  .stars { color: var(--gold); font-size: 0.8rem; margin-bottom: 1rem; letter-spacing: 0.2em; }
+  .testimonial-text {
+    font-size: 0.9rem; line-height: 1.75; color: var(--muted);
+    font-style: italic; margin-bottom: 1.5rem; position: relative; z-index: 1;
+  }
+  .testimonial-rule { width: 30px; height: 1px; background: var(--gold); margin-bottom: 1rem; }
+  .testimonial-name { font-size: 0.82rem; font-weight: 500; color: var(--navy); }
+  .testimonial-role { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
+
+  /* ── CTA ── */
+  #cta {
+    background: var(--navy);
+    text-align: center; position: relative; overflow: hidden;
+    padding: 9rem 5%;
+  }
+  #cta::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(26,58,107,0.5) 0%, transparent 70%);
+  }
+  .cta-ring-1 { width: 600px; height: 600px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  .cta-ring-2 { width: 400px; height: 400px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  #cta .section-tag { justify-content: center; }
+  #cta .section-title { color: var(--white); max-width: 700px; margin: 0 auto; }
+  .cta-sub {
+    max-width: 480px; margin: 1.5rem auto 3rem;
+    font-size: 0.95rem; color: rgba(255,255,255,0.45); line-height: 1.7; font-weight: 300;
+  }
+  .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #060E1C;
+    padding: 4rem 5% 2rem;
+    border-top: 1px solid rgba(201,168,76,0.15);
+  }
+  .footer-top {
+    display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 4rem; padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .footer-brand { }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 700; color: var(--white);
+    letter-spacing: 0.04em; display: block; margin-bottom: 1rem;
+  }
+  .footer-logo span { color: var(--gold); }
+  .footer-brand p {
+    font-size: 0.83rem; color: rgba(255,255,255,0.3); line-height: 1.7; max-width: 260px;
+  }
+  .footer-col h4 {
+    font-size: 0.72rem; color: var(--gold); letter-spacing: 0.16em;
+    text-transform: uppercase; margin-bottom: 1.4rem;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .footer-col ul a {
+    font-size: 0.83rem; color: rgba(255,255,255,0.35);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .footer-col ul a:hover { color: var(--gold); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 2rem; flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-bottom p { font-size: 0.75rem; color: rgba(255,255,255,0.2); }
+  .footer-socials { display: flex; gap: 1rem; }
+  .footer-socials a {
+    width: 34px; height: 34px; border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; transition: border-color 0.2s, background 0.2s;
+    font-size: 0.72rem; color: rgba(255,255,255,0.3);
+  }
+  .footer-socials a:hover { border-color: var(--gold); background: var(--gold); color: var(--navy); }
+
+  /* ── REVEAL ANIMATIONS ── */
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* Mobile */
+  @media (max-width: 900px) {
+    #about { grid-template-columns: 1fr; }
+    .about-visual { height: 300px; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .process-layout { grid-template-columns: 1fr; }
+    .process-visual { position: static; margin-top: 3rem; }
+    .results-inner { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    .hero-stats { display: none; }
+    nav ul { display: none; }
+  }
+  @media (max-width: 600px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+    .about-pillars { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
 
-<div id="cur"></div>
-<div id="cur-ring"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
 <!-- NAV -->
 <nav id="nav">
-  <div class="logo">atlas<em>digital</em></div>
-  <div class="nav-links">
-    <a href="#services">Services</a>
-    <a href="#work">Projets</a>
-    <a href="#process">Processus</a>
-    <a href="#team">Équipe</a>
-    <a href="#pricing">Tarifs</a>
-    <a href="#contact" class="nav-pill">Commencer</a>
-  </div>
+  <a href="#" class="nav-logo">Atlas<span>Digital</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">À propos</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Méthode</a></li>
+    <li><a href="#results">Résultats</a></li>
+    <li><a href="#cta" class="nav-cta">Contact</a></li>
+  </ul>
 </nav>
 
 <!-- HERO -->
-<section class="hero" id="home">
-  <div class="hero-ambient"></div>
-  <div class="hero-grid-lines"></div>
-  <div class="hero-orb orb1"></div>
-  <div class="hero-orb orb2"></div>
-  <div class="hero-eyebrow">Agence de marketing digital · Est. 2018 · Maroc</div>
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="ring ring-1"></div>
+  <div class="ring ring-2"></div>
+  <div class="ring ring-3"></div>
+  <div class="ring ring-4"></div>
+  <div class="hero-line"></div>
 
-  <div class="hero-body">
-    <h1 class="hero-headline">
-      <span class="ln"><span class="wd">Nous rendons</span></span>
-      <span class="ln"><span class="wd">les marques</span></span>
-      <span class="ln"><span class="wd"><em>impossibles</em></span></span>
-      <span class="ln"><span class="wd">à ignorer.</span></span>
+  <div class="hero-content">
+    <div class="hero-tag">Agence de Marketing Digital</div>
+    <h1 class="hero-h1">
+      Croissance<br>
+      <em>digitale,</em>
+      résultats réels.
     </h1>
+    <p class="hero-sub">Atlas Digital accompagne les entreprises marocaines dans leur conquête du digital — SEO, Ads, Email, Social. Stratégie, data et créativité au service de votre ROI.</p>
+    <div class="hero-actions">
+      <a href="#services" class="btn-primary">Nos Services</a>
+      <a href="#about" class="btn-outline">Découvrir l'agence</a>
+    </div>
+  </div>
 
-    <div class="hero-bottom">
-      <div class="hero-left">
-        <p class="hero-desc">Des stratégies de croissance basées sur la data, une créativité audacieuse et une exécution sans compromis. Nous ne faisons pas dans la moyenne.</p>
-        <div class="hero-actions">
-          <a href="#work" class="btn-lime">Voir nos projets <span class="arr">↗</span></a>
-          <button class="btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">→ Lancer un projet</button>
-        </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-value">×4</div>
+      <div class="hero-stat-label">ROAS Moyen</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-value">+42%</div>
+      <div class="hero-stat-label">Conversions A/B</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-value">11K</div>
+      <div class="hero-stat-label">Visiteurs Cible / mois</div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Défiler
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-visual reveal">
+    <div class="about-card about-card-main">
+      <div class="about-big-num">AD</div>
+      <div class="about-card-label">Notre Mission</div>
+      <div class="about-card-text">"Maximiser votre visibilité,<br>amplifier vos ventes."</div>
+    </div>
+    <div class="about-float">
+      <div class="about-float-num">2026</div>
+      <div class="about-float-text">Fondée à Marrakech</div>
+    </div>
+  </div>
+
+  <div class="about-text">
+    <div class="section-tag reveal">Notre Histoire</div>
+    <h2 class="section-title reveal reveal-delay-1">
+      Une agence née pour<br><em>l'ère digitale.</em>
+    </h2>
+    <div class="gold-rule reveal reveal-delay-2"></div>
+    <p class="reveal reveal-delay-2">Atlas Digital est une agence de marketing digital 100% marocaine, fondée pour accompagner les PME, startups et e-commerçants dans leur transformation numérique.</p>
+    <p class="reveal reveal-delay-3">Nous croyons que chaque dirham investi dans le digital doit générer un retour mesurable. Notre approche combine data, créativité et expertise terrain pour construire une présence en ligne qui convertit.</p>
+
+    <div class="about-pillars reveal reveal-delay-3">
+      <div class="pillar">
+        <div class="pillar-title">Data-Driven</div>
+        <div class="pillar-text">Chaque décision s'appuie sur des données réelles, pas des intuitions.</div>
       </div>
-
-      <div class="hero-stats">
-        <div class="stat"><div class="stat-n">$2<b>B</b></div><div class="stat-l">Revenus générés</div></div>
-        <div class="stat"><div class="stat-n">8<b>×</b></div><div class="stat-l">ROAS moyen</div></div>
-        <div class="stat"><div class="stat-n">240<b>+</b></div><div class="stat-l">Marques accompagnées</div></div>
-        <div class="stat"><div class="stat-n">97<b>%</b></div><div class="stat-l">Rétention client</div></div>
+      <div class="pillar">
+        <div class="pillar-title">ROI Focus</div>
+        <div class="pillar-text">Nous mesurons ce qui compte : conversions, ROAS, coût par acquisition.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-title">Test & Learn</div>
+        <div class="pillar-text">A/B testing systématique pour améliorer les performances en continu.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-title">Proximité</div>
+        <div class="pillar-text">Une équipe locale qui comprend le marché marocain en profondeur.</div>
       </div>
     </div>
   </div>
 </section>
-
-<!-- MARQUEE -->
-<div class="marquee">
-  <div class="mq-track">
-    <span class="mq-item">SEO & Contenu</span>
-    <span class="mq-item">Publicité digitale</span>
-    <span class="mq-item">Stratégie de marque</span>
-    <span class="mq-item">Marketing de performance</span>
-    <span class="mq-item">Création</span>
-    <span class="mq-item">Email marketing</span>
-    <span class="mq-item">Analytics</span>
-    <span class="mq-item">CRO</span>
-    <span class="mq-item">Influence</span>
-  </div>
-</div>
-
-<!-- LOGOS -->
-<div class="sec-logos">
-  <div class="logos-inner">
-    <p class="logos-label">Approuvé par plus de 240 entreprises</p>
-  </div>
-</div>
 
 <!-- SERVICES -->
-<section class="sec sec-services" id="services">
-  <div class="sec-inner">
-    <div class="label rev"><span>01</span> Services</div>
-    <div class="svc-head rev">
-      <h2>Tout ce dont votre marque a besoin pour dominer.</h2>
-      <p>Une stratégie digitale complète conçue pour une croissance mesurable à chaque étape du funnel.</p>
+<section id="services">
+  <div class="services-header">
+    <div>
+      <div class="section-tag reveal" style="color:var(--gold)">Ce que nous faisons</div>
+      <h2 class="section-title reveal reveal-delay-1">Nos <em>6 leviers</em><br>de croissance</h2>
     </div>
+    <a href="#cta" class="btn-primary reveal reveal-delay-2">Démarrer un projet</a>
   </div>
-</section>
 
-<!-- WORK -->
-<section class="sec sec-work" id="work">
-  <div class="sec-inner">
-    <div class="label rev"><span>02</span> Projets</div>
-    <div class="work-head rev">
-      <h2>Projets sélectionnés.</h2>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="18" r="10" stroke="#C9A84C" stroke-width="1.5"/>
+          <path d="M26 26L34 34" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M18 12V24M12 18H24" stroke="#C9A84C" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="service-title">SEO & Visibilité Naturelle</div>
+      <div class="service-desc">Optimisation technique, création de contenu, netlinking. Apparaissez en première page Google durablement.</div>
+      <div class="service-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H6M12 2V8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="10" width="32" height="22" rx="2" stroke="#C9A84C" stroke-width="1.5"/>
+          <path d="M14 22L18 18L22 21L28 15" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="28" cy="15" r="2" fill="#C9A84C"/>
+        </svg>
+      </div>
+      <div class="service-title">Google Ads & SEM</div>
+      <div class="service-desc">Campagnes Search, Display, Shopping. Stratégie d'enchères maîtrisée pour un ROAS minimum de ×4.</div>
+      <div class="service-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H6M12 2V8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 8C14 8 10 12 10 16C10 20 14 23 18 24L20 32L22 24C26 23 30 20 30 16C30 12 26 8 20 8Z" stroke="#C9A84C" stroke-width="1.5" stroke-linejoin="round"/>
+          <circle cx="20" cy="16" r="3" stroke="#C9A84C" stroke-width="1.2"/>
+        </svg>
+      </div>
+      <div class="service-title">Social Media Marketing</div>
+      <div class="service-desc">Stratégie organique + publicité payante sur Instagram, Facebook, LinkedIn. Contenu qui engage et convertit.</div>
+      <div class="service-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H6M12 2V8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="10" width="28" height="20" rx="2" stroke="#C9A84C" stroke-width="1.5"/>
+          <path d="M6 16L20 23L34 16" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="service-title">Email Marketing & Automation</div>
+      <div class="service-desc">Segmentation, séquences automatisées, relance panier abandonné. ROI moyen de 42:1 — notre levier phare.</div>
+      <div class="service-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H6M12 2V8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 32L8 20M16 32V14M24 32V18M32 32V8" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M6 20L10 16M14 14L18 10M22 18L26 14M30 8L34 4" stroke="#C9A84C" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="service-title">CRO & Optimisation</div>
+      <div class="service-desc">Tests A/B, analyse des entonnoirs, UX audit. Transformez votre trafic existant en revenus supplémentaires.</div>
+      <div class="service-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H6M12 2V8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 6L24 16H34L26 22L29 32L20 26L11 32L14 22L6 16H16L20 6Z" stroke="#C9A84C" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="service-title">Brand & Storytelling</div>
+      <div class="service-desc">Identité de marque, contenu éditorial, narration digitale. Créez un lien émotionnel durable avec vos clients.</div>
+      <div class="service-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H6M12 2V8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     </div>
   </div>
 </section>
 
 <!-- PROCESS -->
-<section class="sec sec-process" id="process">
-  <div class="sec-inner">
-    <div class="label rev"><span>03</span> Processus</div>
-    <div class="proc-head rev"><h2>Comment nous obtenons des résultats.</h2></div>
+<section id="process">
+  <div class="section-tag reveal">Comment nous travaillons</div>
+  <h2 class="section-title reveal reveal-delay-1">Notre méthode <em>CRO</em><br>en 6 étapes</h2>
+  <div class="gold-rule reveal reveal-delay-2"></div>
+
+  <div class="process-layout">
+    <div class="process-steps reveal">
+      <div class="process-step">
+        <span class="step-num">01</span>
+        <div>
+          <div class="step-title">Analyser</div>
+          <div class="step-text">Google Analytics, Hotjar, cartographie des entonnoirs de conversion.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <span class="step-num">02</span>
+        <div>
+          <div class="step-title">Identifier</div>
+          <div class="step-text">Pages à fort taux de rebond, points de friction UX, opportunités cachées.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <span class="step-num">03</span>
+        <div>
+          <div class="step-title">Formuler l'hypothèse</div>
+          <div class="step-text">Définir précisément ce qu'on change, pourquoi et quel résultat attendu.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <span class="step-num">04</span>
+        <div>
+          <div class="step-title">Tester (A/B)</div>
+          <div class="step-text">Minimum 2 semaines, 1 000+ visiteurs par version. Pas de raccourci.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <span class="step-num">05</span>
+        <div>
+          <div class="step-title">Analyser les résultats</div>
+          <div class="step-text">Seuil de confiance ≥ 95%. Résultats statistiquement significatifs uniquement.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <span class="step-num">06</span>
+        <div>
+          <div class="step-title">Déployer & Recommencer</div>
+          <div class="step-text">La version gagnante passe en production. Le cycle reprend immédiatement.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-visual reveal reveal-delay-2">
+      <div class="section-tag" style="color:var(--gold)">KPI Cibles</div>
+      <div class="kpi-grid" style="margin-top:1.5rem">
+        <div class="kpi-box">
+          <div class="kpi-val">11K+</div>
+          <div class="kpi-label">Visiteurs / mois</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-val">3,5%</div>
+          <div class="kpi-label">Taux de conversion</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-val">×4</div>
+          <div class="kpi-label">ROAS objectif</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-val">+42%</div>
+          <div class="kpi-label">Gain A/B moyen</div>
+        </div>
+      </div>
+      <div class="process-quote">
+        <p>"Les décisions basées sur la data surpassent systématiquement les décisions basées sur l'intuition."</p>
+        <span>— Philosophie Atlas Digital</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results">
+  <div class="section-tag reveal" style="color:var(--gold)">Nos chiffres</div>
+  <h2 class="section-title reveal reveal-delay-1" style="color:var(--white)">Des résultats qui <em>parlent</em><br>d'eux-mêmes.</h2>
+
+  <div class="results-inner reveal reveal-delay-2">
+    <div class="result-item">
+      <div class="result-num">×4</div>
+      <div class="result-bar"><div class="result-bar-fill" style="width:80%"></div></div>
+      <div class="result-label">ROAS moyen généré pour nos clients e-commerce sur Google Ads</div>
+    </div>
+    <div class="result-item">
+      <div class="result-num">+42%</div>
+      <div class="result-bar"><div class="result-bar-fill" style="width:70%"></div></div>
+      <div class="result-label">Augmentation moyenne du taux de conversion via nos tests A/B</div>
+    </div>
+    <div class="result-item">
+      <div class="result-num">11K</div>
+      <div class="result-bar"><div class="result-bar-fill" style="width:90%"></div></div>
+      <div class="result-label">Visiteurs mensuels cibles atteints en 12 mois sur nos projets SEO</div>
+    </div>
+    <div class="result-item">
+      <div class="result-num">3,5%</div>
+      <div class="result-bar"><div class="result-bar-fill" style="width:65%"></div></div>
+      <div class="result-label">Taux de conversion moyen obtenu sur les sites optimisés par Atlas</div>
+    </div>
+    <div class="result-item">
+      <div class="result-num">42:1</div>
+      <div class="result-bar"><div class="result-bar-fill" style="width:85%"></div></div>
+      <div class="result-label">ROI moyen de l'email marketing — notre canal le plus rentable</div>
+    </div>
+    <div class="result-item">
+      <div class="result-num">25%+</div>
+      <div class="result-bar"><div class="result-bar-fill" style="width:75%"></div></div>
+      <div class="result-label">Taux d'ouverture email atteint sur nos campagnes segmentées</div>
+    </div>
   </div>
 </section>
 
 <!-- TESTIMONIALS -->
-<section class="sec sec-testi" id="testimonials">
-  <div class="sec-inner">
-    <div class="label rev"><span>04</span> Témoignages</div>
-    <div class="testi-head rev">
-      <h2>Ce que disent nos clients.</h2>
+<section id="testimonials">
+  <div class="section-tag reveal">Ils nous font confiance</div>
+  <h2 class="section-title reveal reveal-delay-1">Ce que disent<br>nos <em>clients.</em></h2>
+  <div class="gold-rule reveal reveal-delay-2"></div>
+
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal reveal-delay-1">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">Atlas Digital a transformé notre présence en ligne. Notre trafic a triplé en 8 mois et notre taux de conversion est passé de 1,8% à 4,2%. Un vrai partenaire stratégique.</p>
+      <div class="testimonial-rule"></div>
+      <div class="testimonial-name">Karim Benhaddou</div>
+      <div class="testimonial-role">CEO, Maroc Mode E-commerce</div>
     </div>
-
-    <div class="testi-track-wrap rev">
-      <div class="testi-track" id="tTrack">
-        <div class="testi-card">
-          <p class="testi-text">atlasdigital n'a pas seulement géré nos publicités — ils ont reconstruit tout notre moteur de croissance.</p>
-          <div class="testi-author"><div class="av av1">SK</div><div><div class="au-name">Sarah Kim</div><div class="au-role">CEO, Skincare</div></div></div>
-        </div>
-
-        <div class="testi-card">
-          <p class="testi-text">Le niveau de stratégie et de créativité est exceptionnel.</p>
-          <div class="testi-author"><div class="av av2">MR</div><div><div class="au-name">Marcus Reid</div><div class="au-role">CMO, SaaS</div></div></div>
-        </div>
-      </div>
+    <div class="testimonial-card reveal reveal-delay-2">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">Leurs tests A/B ont révélé des opportunités que nous n'avions jamais imaginées. +38% de conversions en 6 semaines sur notre page produit principale. Résultats impressionnants.</p>
+      <div class="testimonial-rule"></div>
+      <div class="testimonial-name">Salma Aït Benhaddou</div>
+      <div class="testimonial-role">Directrice Marketing, Casablanca Tech</div>
     </div>
-  </div>
-</section>
-
-<!-- METRICS -->
-<section class="sec sec-metrics" id="metrics">
-  <div class="sec-inner">
-    <div class="label rev"><span>05</span> Résultats</div>
-    <div class="met-head rev"><h2>Les chiffres<br>ne mentent pas.</h2></div>
-  </div>
-</section>
-
-<!-- TEAM -->
-<section class="sec sec-team" id="team">
-  <div class="sec-inner">
-    <div class="label rev"><span>06</span> Équipe</div>
-    <div class="team-head rev">
-      <h2>Les esprits derrière<br>les résultats.</h2>
+    <div class="testimonial-card reveal reveal-delay-3">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">Notre campagne Google Ads atteignait un ROAS de 1,8. Atlas Digital a restructuré tout le compte et nous sommes maintenant à ×4,5. L'investissement s'est remboursé en 3 mois.</p>
+      <div class="testimonial-rule"></div>
+      <div class="testimonial-name">Youssef El Mansouri</div>
+      <div class="testimonial-role">Fondateur, Atlas Sport Store</div>
     </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section class="sec sec-pricing" id="pricing">
-  <div class="sec-inner">
-    <div class="label rev"><span>07</span> Tarifs</div>
-    <div class="price-head rev"><h2>Tarification<br>transparente.</h2></div>
   </div>
 </section>
 
 <!-- CTA -->
-<div class="cta-band">
-  <h2>Prêt à grandir<br><em>rapidement ?</em></h2>
-  <div class="cta-r">
-    <p>Discutons de votre marque et construisons une stratégie de domination.</p>
-    <a href="#contact" class="btn-black">Réserver un appel gratuit ↗</a>
-  </div>
-</div>
-
-<!-- CONTACT -->
-<section class="sec sec-contact" id="contact">
-  <div class="sec-inner">
-    <div class="contact-wrap">
-      <div class="contact-l rev">
-        <div class="label"><span>08</span> Contact</div>
-        <h2>Construisons quelque chose d'extraordinaire.</h2>
-        <p>Parlez-nous de votre projet. Réponse sous 24h.</p>
-      </div>
-    </div>
+<section id="cta">
+  <div class="ring ring-1 cta-ring-1"></div>
+  <div class="ring ring-2 cta-ring-2"></div>
+  <div class="section-tag reveal">Prêt à vous lancer ?</div>
+  <h2 class="section-title reveal reveal-delay-1">Votre croissance digitale<br><em>commence ici.</em></h2>
+  <p class="cta-sub reveal reveal-delay-2">Parlons de vos objectifs. Nous construirons ensemble une stratégie digitale sur mesure qui génère des résultats mesurables dès le premier mois.</p>
+  <div class="cta-actions reveal reveal-delay-3">
+    <a href="mailto:contact@atlasdigital.ma" class="btn-primary">Démarrer un projet</a>
+    <a href="tel:+212600000000" class="btn-outline">+212 6 00 00 00 00</a>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="foot-top">
-    <div class="foot-brand">
-      <div class="logo">atlas<em>digital</em></div>
-      <p>Nous rendons les marques inoubliables.</p>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="footer-logo">Atlas<span>Digital</span></span>
+      <p>Agence de marketing digital basée à Marrakech, dédiée à la croissance des entreprises marocaines.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">SEO & Visibilité</a></li>
+        <li><a href="#services">Google Ads</a></li>
+        <li><a href="#services">Social Media</a></li>
+        <li><a href="#services">Email Marketing</a></li>
+        <li><a href="#services">CRO & Tests A/B</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Agence</h4>
+      <ul>
+        <li><a href="#about">À propos</a></li>
+        <li><a href="#process">Notre méthode</a></li>
+        <li><a href="#results">Résultats</a></li>
+        <li><a href="#testimonials">Témoignages</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:contact@atlasdigital.ma">contact@atlasdigital.ma</a></li>
+        <li><a href="tel:+212600000000">+212 6 00 00 00 00</a></li>
+        <li><a href="#">Marrakech, Maroc</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Atlas Digital. Tous droits réservés.</p>
+    <div class="footer-socials">
+      <a href="#">in</a>
+      <a href="#">ig</a>
+      <a href="#">fb</a>
+      <a href="#">tw</a>
     </div>
   </div>
 </footer>
 
 <script>
-/* inchangé */
-</script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
 
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button, .service-card, .pillar, .process-step, .kpi-box').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.classList.add('hover'); ring.classList.add('hover'); });
+    el.addEventListener('mouseleave', () => { cursor.classList.remove('hover'); ring.classList.remove('hover'); });
+  });
+
+  // Nav scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => revealObserver.observe(el));
+
+  // Bar animation on scroll
+  const bars = document.querySelectorAll('.result-bar-fill');
+  const barObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('animated'); });
+  }, { threshold: 0.5 });
+  bars.forEach(b => barObserver.observe(b));
+
+  // Counter animation
+  function animateCounter(el, target, suffix = '') {
+    let start = 0, duration = 1800;
+    const startTime = performance.now();
+    const update = (now) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      el.textContent = (typeof target === 'number' ? Math.round(target * ease) : target) + suffix;
+      if (progress < 1) requestAnimationFrame(update);
+    };
+    requestAnimationFrame(update);
+  }
+</script>
 </body>
 </html>
